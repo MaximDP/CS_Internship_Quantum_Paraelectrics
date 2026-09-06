@@ -1,0 +1,744 @@
+% TeX Live 2026 Basic ne fournit pas tous les paquets requis par la classe.
+% Sur la machine de travail, ils restent disponibles dans TeX Live 2025. Ce
+% repli conditionnel permet donc aussi la compilation directe de ce fichier ;
+% il n'est pas active sur une installation TeX Live complete.
+\makeatletter
+\IfFileExists{placeins.sty}{}{%
+  \def\input@path{%
+    {/usr/local/texlive/2025/texmf-dist/tex/latex/placeins/}%
+    {/usr/local/texlive/2025/texmf-dist/tex/latex/siunitx/}%
+    {/usr/local/texlive/2025/texmf-dist/tex/latex/translations/}%
+    {/usr/local/texlive/2025/texmf-dist/tex/latex/wallpaper/}%
+    {/usr/local/texlive/2025/texmf-dist/tex/latex/nomencl/}%
+    {/usr/local/texlive/2025/texmf-dist/tex/latex/lastpage/}%
+    {/usr/local/texlive/2025/texmf-dist/tex/latex/enumitem/}%
+    {/usr/local/texlive/2025/texmf-dist/tex/latex/mdframed/}%
+    {/usr/local/texlive/2025/texmf-dist/tex/latex/zref/}%
+    {/usr/local/texlive/2025/texmf-dist/tex/latex/needspace/}%
+    {/usr/local/texlive/2025/texmf-dist/tex/latex/comment/}%
+  }%
+}
+\makeatother
+
+\documentclass{rapportCS}
+
+% Packages requis par le contenu scientifique et non charges par rapportCS.cls.
+\usepackage{lmodern}
+\usepackage{amssymb}
+\usepackage{bm}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{mdframed}
+\usepackage{comment}
+\usepackage{longtable}
+\usetikzlibrary{positioning}
+
+\graphicspath{{images/}{figures/}}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+\setlength{\emergencystretch}{4em}
+\allowdisplaybreaks[3]
+\AddToHook{cmd/section/before}{\clearpage}
+
+% Commandes scientifiques conservees du rapport source.
+\newcommand{\eff}{\mathrm{eff}}
+\newcommand{\BZ}{\mathrm{BZ}}
+\newcommand{\Tr}{\mathrm{Tr}}
+\newcommand{\dd}{\mathrm{d}}
+\newcommand{\Alpha}{\mathcal A}
+\newcommand{\note}[1]{\par\noindent\textcolor{red!60!black}{\small\textit{[Note: #1]}}\par}
+\newcommand{\sidenote}[1]{\marginpar{\footnotesize\textcolor{red!60!black}{#1}}}
+
+% La classe utilise \project dans son pied de page sans le definir.
+% La definition vide adapte le document a l'interface existante sans modifier
+% rapportCS.cls.
+\providecommand{\project}{}
+
+% Metadonnees imposees par l'interface reelle de rapportCS.cls.
+\titre{Transitions de phase quantiques \& susceptibilité diélectrique dans les
+paraélectriques quantiques\\[0.4em]
+\large\itshape Quantum phase transitions and dielectric susceptibility in
+quantum paraelectrics}
+\eleve{}
+\mention{MMF -- parcours Mathématiques/Physique théoriques}
+\trigrammemention{MMF}
+\filiere{Innovation et Entrepreneuriat}
+\master{Laboratoire SPMS -- UMR 8580, CentraleSupélec\\[-0.2em]
+\includegraphics[width=0.28\textwidth]{logos/logo_spms.png}}
+\tuteurecole{Pierre-Eymeric Janolin}
+\tuteurentreprise{Maxime Devin--Pinson}
+\logoentreprise{}
+% La classe réserve ensuite 6 cm fixes avant le bloc auteur ; cette compensation
+% conserve le bloc sur la couverture tout en séparant visuellement date et auteur.
+\dates{Du 23 avril au 23 septembre 2026\vspace{-5.5cm}}
+
+\hypersetup{
+  pdftitle={Transitions de phase quantiques et susceptibilité diélectrique dans les paraélectriques quantiques},
+  pdfauthor={Maxime Devin-Pinson},
+  pdfsubject={Rapport de stage de troisième année au laboratoire SPMS},
+  pdfkeywords={ferroélectricité, Hamiltonien effectif, SCHA, susceptibilité diélectrique, BaTiO3, SrTiO3, BST}
+}
+% Le paquet lastpage livré avec l'environnement TeX retient ici l'avant-dernière
+% valeur du compteur après le passage en annexes. Ce repère documentaire placé
+% avant le hook du paquet conserve la pagination finale correcte sans modifier
+% la classe fournie.
+\AtEndDocument{\label{rapport:lastpage}}
+
+\begin{document}
+
+\hypersetup{pageanchor=false}
+\pagenumbering{gobble}
+\fairepagedegarde
+\hypersetup{pageanchor=true}
+% La classe reutilise \titre dans le pied de page : on adopte une forme courte
+% apres avoir compose la couverture.
+\renewcommand{\titre}{Transitions quantiques et susceptibilité}
+\fairemarges
+\rfoot{Page\ \thepage\ sur\ \pageref{rapport:lastpage}}
+% Les titres d'annexes sont longs : on les contraint à la zone droite de
+% l'en-tête afin qu'ils ne recouvrent jamais le logo institutionnel.
+\fancyhead[R]{\parbox[b]{0.58\textwidth}{\raggedleft\footnotesize
+  \nouppercase{\leftmark}}}
+% La classe fixe une tête haute de 2 cm sans l'inclure dans la marge supérieure.
+% Cette géométrie documentaire préserve les marges latérales de la classe tout
+% en réservant explicitement la place des en-têtes et pieds de page.
+\newgeometry{left=3cm,right=3cm,top=1.5cm,bottom=1.5cm,
+  includeheadfoot,headheight=2cm,headsep=0.7cm,footskip=1.1cm}
+
+% La couverture est la page physique 1 mais son numéro reste masqué. La
+% pagination visible commence donc à 2 et reste continue jusqu'à la dernière
+% page, afin que le total imprimé corresponde au nombre de pages du PDF.
+\pagenumbering{arabic}
+\setcounter{page}{2}
+
+\section*{Synthèse}
+\addcontentsline{toc}{section}{Synthèse}
+\begingroup\small
+
+Ce travail construit une chaîne analytique et numérique reliant les paramètres
+d'Hamiltoniens effectifs issus de calculs de premiers principes à la réponse
+diélectrique statique de BaTiO$_3$, SrTiO$_3$ et des solutions solides
+Ba$_x$Sr$_{1-x}$TiO$_3$. Le problème scientifique consiste à préserver
+l'origine microscopique des interactions tout en obtenant un modèle continu
+calculable : après avoir retenu les termes essentiels, les couplages locaux, à courte portée et dipolaires sont conservés,
+les déformations homogènes et inhomogènes sont éliminées explicitement, puis les
+fluctuations thermiques et quantiques sont traitées par approximation harmonique
+auto-cohérente (SCHA) \hyperref[ann:scha_reponse]{\textcolor{blue}{(voir
+section~\ref*{ann:scha_reponse})}}.
+
+La résolution des fermetures SCHA est déterministe. Les sommes de Matsubara sont
+effectuées analytiquement lorsque cela est possible, les intégrales sur la zone
+de Brillouin sont évaluées par quadrature et les équations auto-cohérentes sont
+résolues sans échantillonnage stochastique. Le diagnostic post-SCHA utilise
+une quadrature quasi-Monte-Carlo de Sobol brouillée, à graine fixée. Le calcul relie le noyau renormalisé
+à la susceptibilité transverse et compare les résultats à des mesures et à des
+simulations de dynamique moléculaire. Pour BaTiO$_3$, la correction qui rétablit
+le paramètre de maille expérimental ne suffit pas à rétablir la réponse
+diélectrique. Un contre-terme de masse ajusté sur les données compresse la
+correction requise avec une erreur relative absolue moyenne de $0{,}52\,\%$,
+mais il s'agit d'une calibration inverse et non d'une prédiction. Le diagnostic
+post-SCHA corrige la réponse dans la direction attendue, tout en sortant du
+domaine perturbatif contrôlé. Pour les alliages BST, l'approximation de cristal
+virtuel fournit une base de calcul invariante par translation.
+
+Les limites constituent donc une part importante des résultats : sensibilité au
+volume, fluctuations critiques non gaussiennes, identification non unique de la
+physique manquante et absence du désordre chimique explicite. Le rapport propose
+comme suites le calcul de la courbure de l'énergie libre{\renewcommand{\thefootnote}{\fnsymbol{footnote}}\footnote[1]{Dans
+l'ensemble canonique, c'est-à-dire pour un système thermostaté à température
+$T$ et à $N,V$ fixés, l'énergie libre de Helmholtz
+$F=-k_{\rm B}T\ln Z$ est le potentiel thermodynamique de référence. Pour une
+présentation introductive, voir Texier et Roux~\cite{TexierRoux2024}.}}
+SCHA optimisée, une
+resommation cohérente des vertex, puis, si nécessaire, une continuation par
+groupe de renormalisation et un traitement du désordre au-delà du cristal
+virtuel.
+
+Réalisé au laboratoire SPMS, ce stage de troisième année répond au besoin de
+l'équipe d'interpréter et d'anticiper la réponse diélectrique de
+pérovskites{\renewcommand{\thefootnote}{\fnsymbol{footnote}}\footnote[2]{Une
+pérovskite désigne ici un oxyde cristallin de
+formule générale ABO$_3$, formé d'un réseau tridimensionnel d'octaèdres
+BO$_6$ dont les cavités accueillent les cations A.}}
+ferroélectriques et
+paraélectriques quantiques.
+La mission de l'élève a consisté à transformer un Hamiltonien paramétré par
+théorie de la fonctionnelle de la
+densité \hyperref[sec:origin_dft]{\textcolor{blue}{(voir
+section~\ref*{sec:origin_dft})}}
+en un modèle continu quantique, puis en solveurs numériques de
+$\chi(T)$. Le livrable principal est une chaîne de calcul traçable,
+reproductible et confrontable aux mesures, qui sert d'intermédiaire entre les
+calculs de premiers principes, les simulations lourdes et l'expérience.
+
+\noindent\textbf{Mots-clés :} ferroélectricité, Hamiltonien effectif, SCHA,
+susceptibilité diélectrique, BaTiO$_3$, SrTiO$_3$, BST.
+
+\endgroup
+\clearpage
+\section*{Abstract}
+\addcontentsline{toc}{section}{Abstract}
+
+This work develops an analytical and numerical workflow that connects the
+parameters of first-principles effective Hamiltonians to the static dielectric
+response of BaTiO$_3$, SrTiO$_3$, and Ba$_x$Sr$_{1-x}$TiO$_3$ solid solutions.
+The scientific challenge is to retain the microscopic origin of the relevant
+interactions while constructing a tractable continuum model. Local,
+short-range, and dipolar couplings are retained; homogeneous and inhomogeneous
+strains are eliminated explicitly; quantum and thermal fluctuations are then
+treated within the self-consistent harmonic approximation (SCHA)
+\hyperref[ann:scha_reponse]{\textcolor{blue}{(see
+Section~\ref*{ann:scha_reponse})}}.
+
+The SCHA closures are solved deterministically. Matsubara sums are evaluated analytically
+when possible, Brillouin-zone integrals are computed by quadrature, and the
+self-consistent equations are solved without stochastic sampling. The
+post-SCHA diagnostic uses scrambled Sobol quasi-Monte Carlo with a fixed seed. The
+renormalized kernel yields the transverse susceptibility, which is compared
+with experiments and molecular-dynamics simulations. For BaTiO$_3$, restoring
+the experimental lattice parameter does not restore the dielectric response. A
+mass counterterm fitted to the data compresses the required correction with a
+mean absolute relative error of $0.52\,\%$; it is therefore an inverse
+calibration, not a prediction. The post-SCHA diagnostic shifts the response in
+the expected direction but lies outside a controlled perturbative regime. For
+BST alloys, the virtual-crystal approximation provides a translation-invariant
+computational baseline.
+
+The limitations are part of the result: volume sensitivity, non-Gaussian
+critical fluctuations, non-unique identification of missing physics, and the
+absence of explicit chemical disorder. The proposed next steps are the
+calculation of the curvature of the optimized SCHA free energy, a consistent
+vertex resummation, and, if required, a renormalization-group continuation and
+a treatment of disorder beyond the virtual-crystal approximation.
+
+Conducted at the SPMS laboratory, this third-year placement addresses the
+team's need to interpret and anticipate the dielectric response of
+perovskite{\renewcommand{\thefootnote}{\fnsymbol{footnote}}\footnote{A
+perovskite denotes here a crystalline oxide of general formula ABO$_3$, made of
+a three-dimensional network of BO$_6$ octahedra whose cavities accommodate the
+A cations.}}\addtocounter{footnote}{-1}
+ferroelectrics and quantum paraelectrics. The student's mission was to turn an
+effective Hamiltonian parametrized by density-functional theory
+\hyperref[sec:origin_dft]{\textcolor{blue}{(see
+Section~\ref*{sec:origin_dft})}} into a quantum continuum model and then into
+numerical solvers for $\chi(T)$. The main deliverable is a traceable,
+reproducible workflow that can be confronted with measurements and acts as an
+intermediate layer between first-principles calculations, computationally
+expensive simulations, and experiment.
+
+\noindent\textbf{Keywords:} ferroelectricity, effective Hamiltonian, SCHA,
+dielectric susceptibility, BaTiO$_3$, SrTiO$_3$, BST.
+
+\clearpage
+\renewcommand{\contentsname}{Sommaire}
+\tableofcontents
+
+\clearpage
+
+% =============================================================================
+\section{Contexte, reformulation du problème et objectifs}
+\label{sec:mission_context}
+% =============================================================================
+
+Cette partie situe la mission, distingue les informations établies par les
+sources scientifiques de celles propres au stage et définit le problème avant
+de présenter la solution technique.
+
+\subsection{Structure d'accueil et parties prenantes}
+
+Le stage de troisième année s'est déroulé du 23 avril au 23 septembre 2026 au
+laboratoire SPMS (UMR 8580) de CentraleSupélec. L'encadrement scientifique a été
+assuré par Igor Kornev et l'encadrement institutionnel par Pierre-Eymeric
+Janolin. Le besoin de l'équipe était d'interpréter et d'anticiper la réponse
+diélectrique de pérovskites ferroélectriques et paraélectriques quantiques.
+
+La mission consistait à relier une description issue de calculs de premiers
+principes à une grandeur macroscopique mesurable. Elle devait produire une
+méthode compréhensible, reproductible et directement confrontable aux données.
+
+\subsection{Matériaux visés et enjeux applicatifs}
+
+La première distinction oppose conducteurs, semi-conducteurs et isolants. Les matériaux
+étudiés ici, BaTiO$_3$, SrTiO$_3$ et l'alliage Ba$_x$Sr$_{1-x}$TiO$_3$ (BST),
+appartiennent à cette dernière classe et sont en particulier des diélectriques, c'est-à-dire
+des matériaux qui se polarisent sous l'effet d'un champ électrique.
+
+Parmi eux, un paraélectrique ne présente pas de polarisation spontanée sans
+champ. Les matériaux piézoélectriques couplent déformation et tension ; les
+pyroélectriques possèdent une polarisation spontanée qui varie avec la
+température ; les ferroélectriques constituent la sous-classe dont cette
+polarisation peut être inversée par un champ. Un paraélectrique quantique,
+comme SrTiO$_3$ à pression ambiante, reste sans polarisation spontanée car les
+fluctuations de point zéro empêchent la transition classique.
+
+Ces désignations décrivent une phase et non une étiquette immuable du matériau :
+elles ne sont donc pas mutuellement exclusives. En particulier, un même cristal
+peut passer d'une phase paraélectrique à une phase ferroélectrique lorsque la
+température, la pression ou la composition franchit une transition de phase ;
+sa réponse piézoélectrique ou pyroélectrique se définit alors dans la phase
+considérée.
+
+Cette hiérarchie motive les applications visées. Une permittivité élevée peut
+réduire l'aire d'un condensateur de mémoire ; le BST a ainsi été étudié pour
+les condensateurs de DRAM~\cite{EzhilvalavanTseng2000}. La dépendance de sa
+permittivité au champ continu permet d'accorder des filtres, résonateurs ou
+déphaseurs micro-ondes~\cite{Tagantsev2003}, tandis que la caractérisation
+large bande de films BST rend directement compte de leur intérêt aux hautes
+fréquences~\cite{Marksz2021}. Enfin, une réponse pyroélectrique est exploitable
+pour la détection infrarouge~\cite{Liu2002}.
+
+\subsection{Problème scientifique et état de l'art}
+
+Le point de départ est la famille des Hamiltoniens effectifs de premiers
+principes développés pour les pérovskites ferroélectriques. La littérature
+établit déjà des calculs diélectriques à température finie, la sensibilité des
+températures de transition aux déformations, des méthodes de phonons
+auto-cohérentes et des modèles effectifs pour les alliages
+BST~\cite{Zhong1995,Nishimatsu2010,Bianco2017,Walizer2006}.
+
+\subsubsection{État de l'art et positionnement}
+
+Il existe également de véritables passerelles entre modèles microscopiques et
+théories continues ; il serait donc inexact d'affirmer qu'aucun Hamiltonien
+effectif n'a jamais été relié à une théorie de Landau ou de champ. Íñiguez et
+al. ont extrait du Hamiltonien ZVR une énergie libre de Devonshire--Landau
+uniforme et dépendante de la température par exploration Monte-Carlo de
+l'espace des polarisations contraintes~\cite{Iniguez2001}. Geneste, puis Kumar
+et Waghmare, ont utilisé une dynamique moléculaire à polarisation contrainte et
+l'intégration thermodynamique pour obtenir des paysages d'énergie libre de
+Landau ou de Ginzburg--Landau, y compris des parois de domaines et des chemins
+de commutation~\cite{Geneste2009,KumarWaghmare2010}. Völker et al. ont identifié
+une fonctionnelle de champ de phase à partir d'observables DFT et de modèle à
+coquilles, plutôt que par une limite continue algébrique du Hamiltonien
+ZVR~\cite{Volker2011}. Plus récemment, Masuda et Rappe ont combiné un potentiel
+atomistique de valence de liaison et une théorie variationnelle gaussienne pour
+construire un champ de phase à l'échelle atomique du
+PbTiO$_3$~\cite{MasudaRappe2025}, tandis que Xie et al. ont dérivé directement
+de la DFT une surface d'énergie libre volumique en température, polarisation et
+déformation par dynamique moléculaire et métadynamique~\cite{Xie2026}.
+
+Ces travaux reconstruisent une énergie libre à partir de configurations
+échantillonnées : Monte-Carlo chez Íñiguez, dynamique moléculaire contrainte et
+intégration thermodynamique chez Geneste et Kumar--Waghmare, ou métadynamique
+chez Xie \emph{et al.} À notre connaissance, aucun d'eux ne réunit la chaîne
+retenue ici : partir du Hamiltonien complet de modes locaux ZVR/Nishimatsu,
+éliminer analytiquement les déformations homogènes et inhomogènes, conserver le
+noyau périodique de courte portée et le noyau dipolaire non analytique dans une
+action quantique, puis calculer $\chi(T)$ par une SCHA déterministe.
+
+La contribution du stage est ce passage direct, analytique et auditable. Les
+paramètres publiés sont convertis dans une même convention ; le noyau périodique
+et les interactions quartiques induites par les déformations sont conservés ;
+l'action ainsi obtenue alimente une fermeture SCHA pour calculer $\chi(T)$. Les
+fluctuations sont alors évaluées par covariances gaussiennes et quadratures
+déterministes, sans échantillonnage. Des paramètres et une grille identiques
+produisent donc le même résultat et permettent d'isoler la contribution de
+chaque terme du noyau. Cette traçabilité ne rend pas l'approximation exacte :
+les simulations Monte-Carlo et de dynamique moléculaire restent des validations
+indépendantes utiles.
+
+Le rapport sépare en outre, pour BaTiO$_3$, les effets de volume, de
+modes optiques absents et de corrélations non gaussiennes, inclut un diagnostic
+post-SCHA à usage contrôlé, et étend la chaîne au BST par cristal virtuel en
+précisant l'extension nécessaire au désordre chimique.
+
+La question se reformule ainsi :
+
+\begin{mdframed}[linecolor=red!60!black,backgroundcolor=red!2]
+Comment une théorie de champ réduite et calculable peut-elle conserver assez de
+l'Hamiltonien effectif microscopique pour déterminer et diagnostiquer la réponse
+diélectrique de BaTiO$_3$, SrTiO$_3$ et du BST en fonction de la température,
+tout en rendant visibles chaque calibration, chaque approximation et chaque
+perte de pouvoir prédictif ?
+\end{mdframed}
+
+\subsection{Objectifs et critères de réussite}
+
+Les objectifs opérationnels sont les suivants :
+
+\begin{enumerate}[label=\textbf{O\arabic*.},leftmargin=2.7em]
+  \item dériver le noyau continu du secteur de polarisation à partir de
+  l'Hamiltonien effectif discret, avec les interactions de courte portée,
+  dipolaires et médiées par les déformations ;
+  \item formuler les fermetures SCHA paraélectrique et ferroélectrique en
+  intégrant explicitement les fluctuations thermiques et quantiques ;
+  \item calculer la susceptibilité transverse statique et la comparer aux
+  mesures et aux simulations de dynamique moléculaire ;
+  \item déterminer si les écarts proviennent du volume, de modes optiques
+  absents, de la fermeture gaussienne ou de l'approximation de cristal virtuel ;
+  \item proposer des prolongements contrôlés sans masquer les ajustements non
+  prédictifs.
+\end{enumerate}
+
+Le critère de réussite retenu avec l'équipe est une chaîne de calcul
+compréhensible, reproductible et confrontable aux mesures. Les livrables sont
+les dérivations consolidées, des solveurs Python, des contrôles de stabilité, des sorties de données
+réutilisables et des figures reproductibles.
+
+\subsection{Contribution personnelle et périmètre de responsabilité}
+
+Le travail personnel a porté sur la traduction d'un Hamiltonien paramétré par
+DFT en modèle continu quantique, la formulation des fermetures SCHA, le
+développement des solveurs de $\chi(T)$ et la construction de contrôles
+numériques permettant de distinguer prédiction, calibration et extrapolation.
+Le socle numérique comprend des solveurs dans la phase paraélectrique, des
+noyaux périodiques, les sommes de Matsubara, des tests de stabilité et des
+sorties CSV/JSON. Les modèles microscopiques, paramètres publiés et données de
+comparaison proviennent de la littérature.
+
+% =============================================================================
+\section{Démarche et organisation du travail}
+\label{sec:euartingineering_approach}
+% =============================================================================
+
+Cette partie présente la chaîne de raisonnement qui transforme le modèle
+microscopique en un calcul de réponse testable. Les chapitres qui suivent
+développent ensuite explicitement le passage au continu, l'élimination des
+déformations, la fermeture SCHA et les contrôles numériques : ces calculs font
+partie du cœur du rapport.
+
+\subsection{Modélisation et chaîne numérique}
+
+La démarche est organisée comme une suite de transformations traçables :
+
+\begin{enumerate}[label=\textbf{M\arabic*.},leftmargin=2.7em,itemsep=3pt]
+  \item partir des modes polaires locaux, des degrés de liberté élastiques, des
+  couplages dipolaires et de courte portée, ainsi que des coefficients
+  anharmoniques publiés ;
+  \item éliminer les déformations homogènes et inhomogènes en conservant les
+  interactions quartiques potentiellement non locales induites ;
+  \item exprimer le noyau périodique dans les variables de polarisation et dans
+  sa représentation continue sans supprimer le terme dipolaire non analytique ;
+  \item évaluer les covariances thermiques et quantiques par une fermeture SCHA
+  déterministe dans les phases paraélectrique et ferroélectrique déplacée ;
+  \item obtenir la réponse statique à partir de l'inverse du noyau à fréquence
+  nulle,
+  \begin{equation}
+  \chi^{ab}_{\rm stat}(k;T)
+  =\Omega_0\left[A(k,\omega_0;T)^{-1}\right]^{ab},
+  \label{eq:cs_static_susceptibility}
+  \end{equation}
+  puis rétablir le fond électronique pour comparer la permittivité calculée aux
+  mesures ;
+  \item comparer les jeux de paramètres et les fermetures, quantifier les
+  écarts et distinguer prédiction, calibration indépendante, calibration
+  inverse et extrapolation.
+\end{enumerate}
+
+Le choix déterministe est volontaire : les sommes de Matsubara sont analytiques
+lorsque c'est possible, les intégrales sur la zone de Brillouin utilisent des
+quadratures régulières et les fermetures non linéaires sont résolues par
+encadrement puis par une recherche de racine de Brent. Cette stratégie conserve les fluctuations
+gaussiennes thermiques et quantiques sans introduire le bruit d'un
+échantillonnage de Monte-Carlo.
+
+\subsection{Justification des choix et traçabilité scientifique}
+
+Quatre décisions structurent le travail. Premièrement, les secteurs de
+déformation restent explicites jusqu'à leur élimination afin de ne pas confondre
+les contributions homogènes et inhomogènes dynamiques. Deuxièmement, les boucles
+numériques emploient les noyaux périodiques issus des interactions dipolaires ou
+entre voisins complets plutôt que de prolonger une
+expansion à petit $k$ de type Landau jusqu'au bord de la zone de Brillouin.
+Troisièmement, la réponse
+diélectrique est comparée à la fois à une information de maille contrainte
+indépendamment et à des données volontairement calibrées de manière inverse.
+Quatrièmement, l'approximation de cristal virtuel (VCA) sert de référence
+homogène, et non de moyenne configurationnelle d'un alliage désordonné.
+
+Ces choix rendent le calcul auditable : chaque figure précise quelles courbes
+sont prédites, calibrées, reconstruites ou extrapolées, et le dossier technique
+conserve les équations et conversions de paramètres nécessaires à la
+reproduction de la chaîne.
+
+\subsection{Risques et moyens de maîtrise}
+
+\begin{table}[H]
+\centering
+\caption{Risques scientifiques et contrôles employés dans l'analyse.}
+\label{tab:cs_risk_register}
+\begin{tabular}{p{0.24\textwidth}p{0.34\textwidth}p{0.30\textwidth}}
+\hline
+Risque & Conséquence & Contrôle ou limite explicitée \\
+\hline
+Sensibilité au volume & Les températures de transition et la réponse peuvent fortement varier & Comparer séparément pression nulle, maille ajustée et protocole calibré \\
+Non-identifiabilité inverse & Une masse scalaire ajustée peut imiter plusieurs mécanismes absents & Ne jamais interpréter la pression ajustée comme une pression physique unique \\
+Fermeture gaussienne critique & La réponse du noyau d'essai peut échouer près d'une instabilité & Tester le sens de la correction post-SCHA et signaler la perte de contrôle \\
+Désordre omis par la VCA & Les fluctuations chimiques et le mélange des moments sont absents & Présenter la VCA comme référence et prévoir des supercellules ou une moyenne configurationnelle \\
+Transition du premier ordre & Une spinodale\footnotemark{} paraélectrique n'est pas la température de coexistence & Présenter $A_1\to0^+$ comme limite de stabilité et non comme prédiction thermodynamique \\
+\hline
+\end{tabular}
+\end{table}
+\footnotetext{Une spinodale est la limite de métastabilité d'une branche
+locale : un mode de sa Hessienne devient nul et ce minimum perd sa stabilité.
+Elle ne coïncide pas, en général, avec la température de coexistence des minima
+d'une transition du premier ordre.}
+
+\subsection{Organisation du travail et ressources}
+
+Le travail a été organisé par enrichissements successifs : consolidation de
+l'Hamiltonien, passage au continu, intégration des fluctuations quantiques,
+développement des solveurs, contrôles de convergence puis comparaison aux
+mesures. Les échanges avec Igor Kornev et Pierre-Eymeric Janolin ont servi à
+valider les hypothèses physiques, à hiérarchiser les écarts et à définir les
+prolongements pertinents. L'implémentation Python produit des sorties CSV/JSON
+et des figures reproductibles ; le coût en $n^3$ de la grille de Brillouin est
+suivi afin de dimensionner les calculs.
+
+ChatGPT Codex a été utilisé ponctuellement comme assistant de développement
+pour proposer, reformuler ou déboguer des portions des solveurs numériques et
+de leur documentation. Les choix physiques, les conventions, la validation des sorties et leur interprétation
+ont été effectués sous la responsabilité de l'auteur.
+
+Le tableau suivant constitue le bilan a posteriori des jalons qui ont structuré
+le stage. La première semaine a été consacrée à l'étude bibliographique afin de
+fixer l'état de l'art, de sélectionner les jeux de paramètres et les références
+expérimentales, puis de préciser les conventions avant les calculs.
+
+\begin{table}[H]
+\centering
+\caption{Jalons effectivement réalisés pendant le stage.}
+\label{tab:cs_macro_planning}
+\begingroup
+\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{|>{\raggedright\arraybackslash}p{0.21\textwidth}|
+                  >{\raggedright\arraybackslash}p{0.71\textwidth}|}
+\hline
+\textbf{Période} & \textbf{Réalisation et jalon} \\
+\hline
+\textit{Phase 1} --- Semaines 1--2 &
+  \textbf{Semaine 1 :} recherches bibliographiques ciblées, établissement de
+  l'état de l'art et sélection des données expérimentales de référence.
+  \textbf{Semaine 2 :} extraction des paramètres DFT (constantes de force,
+  $Z^*$, $\Omega$) ; ajustement de l'Hamiltonien Zhong--Vanderbilt ; calcul de
+  la référence LGD classique ($T_0$, $T_c$, $T^*$). \\
+\hline
+\textit{Phase 2} --- Semaines 3--6 &
+  Coarse-graining ; développement en gradient des couplages intersites ;
+  dérivation complète de l'action euclidienne QLGW ; vérification de la limite
+  classique ($\hbar\to0$). \\
+\hline
+\textit{Phase 3} --- Semaines 7--9 &
+  Mise en place de la théorie SCP ; sommes de Matsubara exactes (limite $k=0$
+  puis modes finis $k$) ; résolution numérique de l'équation implicite sur
+  $\alpha_{\mathrm{eff}}(T)$ ; recherche d'une forme semi-analytique pour
+  $\chi(T)$. \\
+\hline
+\textit{Phase 4} --- Semaines 10--14 &
+  Dérivation analytique dans la phase ferroélectrique ; dérivation analytique
+  de la réponse piézoélectrique $d_{33}(T)$ ; comparaison avec les données
+  expérimentales de SrTiO$_3$ et BaTiO$_3$. \\
+\hline
+\textit{Phase 5} --- Semaines 15--17 &
+  Interpolation des paramètres en composition $x$ (approximation du cristal
+  virtuel) ; extension au-delà de la SCHA par l'étude de corrections
+  post-SCHA. \\
+\hline
+Semaines 18--19 &
+  Rédaction du mémoire et préparation du support de soutenance Beamer. \\
+\hline
+\end{tabular}
+\endgroup
+\end{table}
+
+\subsection{Mode de lecture du cahier de calcul}
+
+Le cœur scientifique qui suit n'est ni une annexe ni une synthèse réservée à
+des spécialistes. Il constitue le livrable principal du stage et reprend la
+chaîne de calcul dans l'ordre où elle peut être reconstruite : variables
+microscopiques, unités, élimination des déformations, noyaux périodiques,
+action quantique, fermeture SCHA, réponse, paramètres puis contrôles
+numériques. Les équations indispensables sont conservées dans le corps du
+rapport ; le texte qui les entoure précise leur rôle physique et le test associé.
+
+Un lecteur non spécialiste peut suivre les paragraphes explicatifs, les
+encadrés et les bilans sans refaire chaque contraction tensorielle. Un lecteur
+souhaitant reproduire le calcul dispose, dans les mêmes chapitres, des
+conventions de Fourier, des facteurs de volume, des valeurs numériques et de
+l'ordre exact des opérations. Les jeux de paramètres, leurs unités et la
+reconstruction numérique du noyau sont regroupés dans l'annexe~\ref{sec:core_parameter_sets}.
+Les dernières sections présentent ensuite l'organisation,
+la validation, la valeur créée et la prise de recul autour de ce cahier
+scientifique.
+
+
+
+% =============================================================================
+% Cœur théorique et numérique du rapport
+% =============================================================================
+
+\input{coeur_theorique_fr}
+
+% =============================================================================
+\section{\texorpdfstring{\enspace Synthèse des résultats et valeur créée}{Synthèse des résultats et valeur créée}}
+\label{sec:results_value}
+% =============================================================================
+
+Les sections précédentes ont présenté chaque résultat au contact de la méthode
+qui le produit : comparaison de BaTiO$_3$ dans la
+section~\ref{ann:bto_detail}, extension VCA au BST dans la
+section~\ref{ann:bst_vca_fr}, puis diagnostic post-SCHA dans la
+section~\ref{ann:post_scha_fr}. La présente section  donne la lecture transversale, les limites
+d'usage et la valeur pour la poursuite du travail.
+
+\begin{table}[H]
+\centering
+\caption{Principaux résultats quantitatifs et interprétation autorisée.}
+\label{tab:cs_result_synthesis}
+\begin{tabular}{p{0.26\textwidth}p{0.24\textwidth}p{0.38\textwidth}}
+\hline
+Résultat & Indice quantitatif & Interprétation autorisée \\
+\hline
+Ajustement de maille & Erreur maximale $1{,}92\times10^{-6}\,\text{\AA}$ & Le volume est reproduit avec précision sans rétablir la réponse diélectrique \\
+Ajustement diélectrique inverse & Erreur relative absolue moyenne $0{,}52\,\%$ & Les contributions absentes se projettent régulièrement sur une masse scalaire dans l'intervalle ajusté \\
+Spinodale paraélectrique du protocole $p_{\rm fit}$ & $385{,}2\,\mathrm K$ & Température où la branche centrée calibrée perd sa stabilité ($A_1\to0^+$) \\
+Sens de la correction post-SCHA & Réduction du désaccord d'environ $48$ à $65\,\%$ & Les corrections non gaussiennes comptent, mais l'expansion en une passe n'est pas contrôlée \\
+Compression affine du BST & Résidu maximal inférieur à $0{,}62\,\%$ & Deux paramètres compressent efficacement la cible sans valider indépendamment la VCA \\
+Sensibilité de grille pour le BST & Au plus $0{,}36$ à $0{,}53\,\%$ entre $n=32$ et $40$ & L'incertitude de quadrature est inférieure aux incertitudes de modèle et de mesure \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection*{Applicabilité, réutilisation et valeur pour le SPMS}
+
+Le stage fournit au SPMS un intermédiaire analytique entre calculs DFT,
+simulations lourdes et mesures. La chaîne de modélisation est auditable, les
+calculs de réponse sont déterministes, les jeux de paramètres peuvent être
+comparés dans un même cadre et les diagnostics empêchent de confondre un
+contre-terme ajusté avec une prédiction. Le code et les sorties structurées
+facilitent la reprise des calculs et l'extension vers d'autres compositions.
+
+La décision scientifique avant une extension plus ambitieuse au BST est de
+vérifier qu'un modèle enrichi reproduit simultanément le volume, la température
+de transition et $\chi(T)$ éventuellement avec une correction de dilatation thermique. Les résultats négatifs
+sont donc utiles : la correction de maille ne suffit pas, la calibration inverse
+n'est pas une prédiction indépendante mais peut être utile pour de future péridction, l'expansion post-SCHA en une passe n'est pas contrôlée
+et la VCA néglige le désordre, sans que l'on puisse affirmer qu'il faille le prendre en compte par ailleurs.
+
+
+% La traçabilité suit désormais les résultats qu'elle documente.
+\input{tracabilite_archive_fr}
+
+% =============================================================================
+\section{Prise de recul professionnelle, éthique et prolongements}
+\label{sec:professional_perspective}
+% =============================================================================
+
+Cette partie distingue les prolongements scientifiques étayés par les résultats
+des apprentissages professionnels et éthiques tirés de la mission.
+
+\subsection{Prolongements scientifiques contrôlés}
+
+Les suites sont hiérarchisées dans l'ordre suivant :
+
+\begin{enumerate}
+  \item calculer la courbure de l'énergie libre SCHA optimisée par rapport au
+  centroïde de polarisation, plutôt que d'identifier directement la réponse
+  physique à l'inverse du noyau d'essai ;
+  \item construire les vertex complets ordonnés normalement et tester une
+  resommation cohérente de type 2PI ou Dyson ;
+  \item n'utiliser un groupe de renormalisation fonctionnel tridimensionnel pour
+  le mode de Matsubara nul que si l'action précédente est contrôlée ;
+  \item comparer le flot à une dynamique moléculaire ou à un calcul de
+  Monte-Carlo utilisant le même Hamiltonien ;
+  \item dépasser la VCA par des supercellules quasi-aléatoires spéciales ou par
+  un propagateur moyenné sur les configurations avec auto-énergie de désordre.
+\end{enumerate}
+
+
+\subsection{Apprentissages professionnels et travail collectif}
+
+Le stage a développé quatre compétences principales : reformuler un problème
+ouvert en chaîne de calcul, articuler physique, mathématiques et implémentation,
+construire des contrôles plutôt que valider « à l'œil », et expliquer une limite
+technique sans masquer l'incertitude. La comparaison des corrections de volume,
+de masse et de fermeture illustre cette évolution de méthode : un bon accord
+numérique n'est accepté qu'après identification de ce qui a été contraint par
+les données.
+
+Les échanges avec Igor Kornev ont nourri la construction physique du passage au
+continu et de la SCHA ; ceux avec Pierre-Eymeric Janolin ont contribué au
+cadrage, à la mise en perspective et à la communication des résultats. Les
+discussions avec les autres membres du SPMS ont aidé à relier les calculs aux
+questions expérimentales et aux usages possibles des matériaux.
+
+\subsection{Réflexion éthique et environnementale}
+
+Les courbes calibrées, reconstruites et extrapolées sont identifiées séparément,
+et un accord numérique n'est jamais présenté comme l'identification causale
+d'un mécanisme. Cette distinction protège contre une mauvaise interprétation
+des résultats et participe à l'intégrité scientifique. Les données, sources,
+hypothèses et paramètres sont conservés avec les sorties de calcul afin de
+faciliter la reproductibilité.
+
+Ce travail s'inscrit aussi dans le contexte plus large du développement de
+matériaux fonctionnels à impact réduit. Les pérovskites étudiées ici sont sans
+plomb ; leur modélisation contribue donc, à son échelle, à l'effort visant des
+alternatives aux ferroélectriques au plomb tels que les PZT.
+
+% =============================================================================
+\section{Conclusion générale}
+\label{sec:general_conclusion}
+% =============================================================================
+
+Le stage fournit une voie transparente entre les paramètres microscopiques des
+Hamiltoniens effectifs et la susceptibilité diélectrique des pérovskites. Le
+résultat principal est une hiérarchie
+traçable de modèles et de diagnostics : élimination explicite des déformations,
+noyaux périodiques complets, fermetures SCHA déterministes, comparaisons aux
+mesures et à la dynamique moléculaire, et séparation claire entre prédiction et
+calibration inverse.
+
+Les résultats montrent que la correction du volume thermique ne rétablit pas à
+elle seule la réponse diélectrique de BaTiO$_3$, qu'une contribution absente peut
+se projeter sur une masse scalaire lisse sans être identifiée de manière unique,
+que la première correction post-SCHA agit dans le bon sens mais n'est pas
+contrôlée, et que la VCA fournit une base réutilisable pour le BST tout en
+négligeant le désordre chimique.
+
+Le besoin du SPMS est donc satisfait sur le plan méthodologique : l'équipe
+dispose d'un intermédiaire analytique et numérique reproductible entre DFT,
+simulations lourdes et mesures. La recommandation est de fiabiliser d'abord la
+réponse par la courbure de l'énergie libre et par un traitement cohérent des
+vertex, puis de n'étendre le modèle au BST désordonné qu'après reproduction
+simultanée du volume, de la température de transition et de $\chi(T)$.
+
+% =============================================================================
+\section{Auto-évaluation des compétences}
+% =============================================================================
+
+\input{auto_evaluation_competences_fr}
+
+% =============================================================================
+% Annexes techniques
+% =============================================================================
+\clearpage
+\appendix
+\input{annexe_jeux_parametres_fr}
+\clearpage
+\input{annexe_ferroelectrique_fr}
+
+% =============================================================================
+\section*{Remerciements}
+\addcontentsline{toc}{section}{Remerciements}
+% =============================================================================
+
+Je tiens à remercier tout particulièrement Pierre-Eymeric Janolin et Igor
+Kornev pour leur encadrement, leur disponibilité et la qualité de leurs conseils
+tout au long de ce stage. Je remercie également l'ensemble des membres du
+laboratoire SPMS pour leur accueil, les discussions scientifiques et l'aide
+qu'ils m'ont apportée.
+
+\clearpage
+\renewcommand{\refname}{Références bibliographiques}
+\phantomsection
+\addcontentsline{toc}{section}{Références bibliographiques}
+\begingroup
+\small
+\bibliographystyle{unsrt}
+\bibliography{biblio}
+\endgroup
+
+\end{document}

@@ -1,0 +1,50 @@
+% Section de traçabilité placée après les résultats.
+% =============================================================================
+\section{Traçabilité et archive scientifique}
+\label{ann:tracabilite}
+% =============================================================================
+
+La livraison finale est disponible dans le dépôt GitHub
+\href{https://github.com/MaximDP/CS_Internship_Quantum_paraelctrics}
+{du stage au SPMS}. Ce dépôt
+constitue le point d'entrée du travail : il réunit le rapport, la soutenance Beamer,
+la chaîne SCHA effectivement exécutée, les jeux de paramètres et de données
+sources nécessaires, les figures livrées et les instructions de reproduction.
+Chaque version exploitable pourra ainsi être identifiée par un
+commit Git et, le cas échéant, par une version taguée.
+
+Les éléments nécessaires à la reproduction sont répartis comme suit :
+\begin{itemize}
+  \item \texttt{rapportCS\_stage\_maxime/biblio.bib} contient les références citées ;
+  \item les dossiers \texttt{images/} et \texttt{figures/} du rapport et
+  le dossier de figures du beamer contiennent les illustrations ;
+  \item dans la pipeline, \texttt{inputs/} regroupe les configurations et données,
+  et \texttt{outputs/reference/} conserve les résultats numériques livrés ;
+  \item les chapitres théoriques du présent rapport exposent dans le corps du
+  document les calculs, conventions et contrôles qui fondent les résultats.
+  \item l'annexe~\ref{sec:core_parameter_sets} réunit les jeux de paramètres,
+  les unités et l'ordre de reconstruction numérique du noyau.
+\end{itemize}
+
+La chaîne exécutable est le répertoire
+\texttt{../python/scha\_pipeline/}, distinct des prototypes archivés. Son point
+d'entrée de validation, depuis la racine de la livraison, est
+\begin{verbatim}
+python3 python/scha_pipeline/validate_pipeline.py --quick
+\end{verbatim}
+La même commande sans \texttt{--quick} exécute également les contrôles de
+convergence les plus coûteux. Elle est non destructive : les caches et fichiers
+temporaires sont redirigés, et tout échec obligatoire produit un code de retour
+non nul. Le fichier \texttt{python/scha\_pipeline/requirements.txt} fixe les
+versions des bibliothèques scientifiques utilisées avec Python 3.9.6 ; le fichier
+\texttt{python/scha\_pipeline/README.md} donne le graphe de calcul, les unités,
+les scripts appelés et un exemple de commande de bout en bout.
+
+Un premier calcul autonome est lancé par
+\begin{verbatim}
+python3 python/scha_pipeline/run_pipeline.py
+\end{verbatim}
+Il lit \texttt{inputs/examples/batio3\_500K.json} et écrit la solution et la
+réponse dans \texttt{outputs/example/}. Les nouveaux calculs sont séparés des
+sorties de référence ; le README décrit également les scans utilisés pour les
+figures du rapport et de la soutenance.

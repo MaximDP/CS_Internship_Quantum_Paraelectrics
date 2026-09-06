@@ -1,0 +1,5 @@
+# Reproducible environment: Python 3.9.6
+numpy==1.26.2
+scipy==1.11.3
+sympy==1.12
+matplotlib==3.8.1

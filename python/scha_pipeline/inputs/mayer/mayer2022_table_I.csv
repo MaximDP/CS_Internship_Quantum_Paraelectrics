@@ -1,0 +1,26 @@
+parameter,value,unit,status,source
+a0,3.987,angstrom,conventional PBEsol,Table I
+polar_mass,38.148,amu,conventional PBEsol,Table I
+kappa,-1.965,eV/angstrom^2,conventional PBEsol,Table I
+kappa2,8.007,eV/angstrom^2,conventional PBEsol,Table I
+alpha,123.492,eV/angstrom^4,conventional PBEsol,Table I
+gamma,-165.344,eV/angstrom^4,conventional PBEsol,Table I
+k1,-528.388,eV/angstrom^6,conventional PBEsol,Table I
+k2,123.688,eV/angstrom^6,conventional PBEsol,Table I
+k3,307.317,eV/angstrom^6,conventional PBEsol,Table I
+k4,3370.229,eV/angstrom^8,conventional PBEsol,Table I
+B11,126.137,eV,conventional PBEsol,Table I
+B12,42.391,eV,conventional PBEsol,Table I
+B44,50.046,eV,conventional PBEsol,Table I
+B1xx,-235.064,eV/angstrom^2,conventional PBEsol,Table I
+B1yy,-19.341,eV/angstrom^2,conventional PBEsol,Table I
+B4yz,-15.333,eV/angstrom^2,conventional PBEsol,Table I
+Zstar,10.267,e,conventional PBEsol,Table I
+epsilon_infinity,6.847,dimensionless,conventional PBEsol,Table I
+j1,-2.060,eV/angstrom^2,conventional PBEsol,Table I
+j2,-1.173,eV/angstrom^2,conventional PBEsol,Table I
+j3,0.680,eV/angstrom^2,conventional PBEsol,Table I
+j4,-0.610,eV/angstrom^2,conventional PBEsol,Table I
+j5,0.000,eV/angstrom^2,conventional PBEsol,Table I
+j6,0.277,eV/angstrom^2,conventional PBEsol,Table I
+j7,0.000,eV/angstrom^2,conventional PBEsol,Table I

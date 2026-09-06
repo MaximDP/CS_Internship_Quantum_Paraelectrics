@@ -1,0 +1,199 @@
+{
+  "status": "Mayer PBEsol effective anharmonic model",
+  "model": "mayer_2022_pbesol_anharmonic_bto",
+  "ngrid": 40,
+  "temperature_grid_K": [
+    400.0,
+    800.0,
+    10.0
+  ],
+  "lattice_reference": {
+    "source": "Nakatani et al., Acta Cryst. B 72, 151-159 (2016)",
+    "fit_domain_K": [
+      413.0,
+      598.0
+    ],
+    "slope_angstrom_per_K": 4.986748567879081e-05,
+    "intercept_angstrom": 3.989304328110981,
+    "data_rmse_angstrom": 0.00015814385024570733
+  },
+  "dielectric_reference": {
+    "source": "Wieczorek et al., Ferroelectrics 336, 61-67 (2006), Fig. 1(a)",
+    "doi": "10.1080/00150190600695743",
+    "status": "digitized experimental points; not raw author table",
+    "sample": "BaTiO3 single crystal with evaporated gold electrodes",
+    "frequency_Hz": 1000.0,
+    "field_kV_per_cm": 0.1,
+    "number_of_points": 14,
+    "temperature_interval_K": [
+      415.65,
+      448.15
+    ],
+    "conversion": "chi_soft=(epsilon_r-eps_inf_Mayer)/(4*pi), eps_inf_Mayer=6.847",
+    "used_in_pressure_fit": false
+  },
+  "mayer_dielectric_reference": {
+    "source": "Mayer et al., Phys. Rev. B 106, 064108 (2022), Fig. 3(a)",
+    "doi": "10.1103/PhysRevB.106.064108",
+    "status": "digitized experimental points; not raw author table",
+    "sample": "BaTiO3 single crystal with silver-paint electrodes",
+    "measurement_frequency_range_Hz": [
+      20.0,
+      1000000.0
+    ],
+    "plotted_frequency_status": "not specified in the Fig. 3 caption",
+    "number_of_points": 87,
+    "temperature_interval_K": [
+      302.0,
+      470.0
+    ],
+    "conversion": "chi_soft=(epsilon_r-eps_inf_Mayer)/(4*pi), eps_inf_Mayer=6.847",
+    "used_in_pressure_fit": false
+  },
+  "previous_nishimatsu_comparison": {
+    "source": "nishimatsu_previous_predictions_400_800K_n40.csv",
+    "status": "reference n=40 Nishimatsu SCHA curves, recomputed to 800 K with the historical pressure laws held fixed",
+    "protocols": [
+      "zero pressure",
+      "lattice-matched pressure",
+      "pressure fitted to the Wieczorek response"
+    ]
+  },
+  "pointwise_lattice_pressure": {
+    "minimum_GPa": -3.4620157299602803,
+    "maximum_GPa": -1.2515598493173115,
+    "maximum_abs_lattice_error_angstrom": 8.881784197001252e-16
+  },
+  "affine_pressure_diagnostic": {
+    "slope_GPa_per_K": -0.005531652211167929,
+    "intercept_GPa": 0.9773830633904768,
+    "pressure_rmse_GPa": 0.007297792575736975,
+    "maximum_abs_lattice_error_angstrom": 0.00013100564505830192
+  },
+  "numerical_checks": {
+    "maximum_abs_root_residual": 9.191692545984509e-14,
+    "all_values_finite": true
+  },
+  "parameter_snapshot": {
+    "source": {
+      "citation": "F. Mayer et al., Phys. Rev. B 106, 064108 (2022)",
+      "doi": "10.1103/PhysRevB.106.064108",
+      "exchange_correlation": "PBEsol",
+      "table_I": {
+        "a0_angstrom": 3.987,
+        "polar_mass_amu": 38.148,
+        "kappa_ev_per_angstrom2": -1.965,
+        "kappa2_ev_per_angstrom2": 8.007,
+        "alpha_ev_per_angstrom4": 123.492,
+        "gamma_ev_per_angstrom4": -165.344,
+        "k1_ev_per_angstrom6": -528.388,
+        "k2_ev_per_angstrom6": 123.688,
+        "k3_ev_per_angstrom6": 307.317,
+        "k4_ev_per_angstrom8": 3370.229,
+        "b11_ev": 126.137,
+        "b12_ev": 42.391,
+        "b44_ev": 50.046,
+        "b1xx_ev_per_angstrom2": -235.064,
+        "b1yy_ev_per_angstrom2": -19.341,
+        "b4yz_ev_per_angstrom2": -15.333,
+        "zstar_e": 10.267,
+        "eps_inf": 6.847,
+        "j1_ev_per_angstrom2": -2.06,
+        "j2_ev_per_angstrom2": -1.173,
+        "j3_ev_per_angstrom2": 0.68,
+        "j4_ev_per_angstrom2": -0.61,
+        "j5_ev_per_angstrom2": 0.0,
+        "j6_ev_per_angstrom2": 0.277,
+        "j7_ev_per_angstrom2": 0.0
+      },
+      "anharmonic_reduction": {
+        "k1_conventional_ev_per_angstrom6": -528.388,
+        "k4_conventional_ev_per_angstrom8": 3370.229,
+        "k1_effective_ev_per_angstrom6": -1443.85,
+        "k4_effective_ev_per_angstrom8": 17216.816,
+        "u_fit_min_angstrom": 0.0,
+        "u_fit_max_angstrom": 0.25
+      }
+    },
+    "explicit_assumptions": {
+      "acoustic_mass_amu": 46.44,
+      "acoustic_mass_provenance": "reference-curve value 46.44 amu; Nishimatsu 2016 Table I gives 46.64 amu; not a refitted anharmonic coefficient from Mayer Table I",
+      "A01_mapping": "A01 = 2*kappa after unit conversion",
+      "A02_A04": "set to zero because the full periodic FERAM kernel is used"
+    },
+    "derived_quartic_invariants_hartree_bohr": {
+      "bare_b1": 0.15684316660555703,
+      "bare_b2": 0.9529547968849545,
+      "homogeneous_lambda_b1": -0.05514088168711682,
+      "homogeneous_lambda_b2": 1.5742618204178462,
+      "effective_b1": 0.18441360744911545,
+      "effective_b2": 0.16582388667603143
+    },
+    "converted_conventional": {
+      "name": "mayer_2022_pbesol_conventional_bto",
+      "a0": 7.5343380588829465,
+      "A01": -0.04044307319627403,
+      "A02": 0.0,
+      "A03": 0.0,
+      "A04": 0.0,
+      "A05": 0.452336207099219,
+      "b1_eff": 0.18441360744911545,
+      "b2_eff": 0.16582388667603143,
+      "k1_6": -0.42639202851086966,
+      "k2_6": 0.0998122160655663,
+      "k3_6": 0.2479948807048512,
+      "k4_8": 0.7615839941111501,
+      "mass_amu": 38.148,
+      "zstar": 10.267,
+      "eps_inf": 6.847,
+      "kappa2": 0.08239890256553846,
+      "j1": -0.021199168138504962,
+      "j2": -0.012071176808964234,
+      "j3": 0.006997783657370571,
+      "j4": -0.0062774235749941875,
+      "j5": 0.0,
+      "j6": 0.002850567754546541,
+      "j7": 0.0
+    },
+    "converted_anharmonic": {
+      "name": "mayer_2022_pbesol_anharmonic_bto",
+      "a0": 7.5343380588829465,
+      "A01": -0.04044307319627403,
+      "A02": 0.0,
+      "A03": 0.0,
+      "A04": 0.0,
+      "A05": 0.452336207099219,
+      "b1_eff": 0.18441360744911545,
+      "b2_eff": 0.16582388667603143,
+      "k1_6": -1.1651402574725753,
+      "k2_6": 0.0998122160655663,
+      "k3_6": 0.2479948807048512,
+      "k4_8": 3.8905520945777727,
+      "mass_amu": 38.148,
+      "zstar": 10.267,
+      "eps_inf": 6.847,
+      "kappa2": 0.08239890256553846,
+      "j1": -0.021199168138504962,
+      "j2": -0.012071176808964234,
+      "j3": 0.006997783657370571,
+      "j4": -0.0062774235749941875,
+      "j5": 0.0,
+      "j6": 0.002850567754546541,
+      "j7": 0.0
+    },
+    "acoustic_parameters": {
+      "coefficients_name": "mayer_2022_pbesol_anharmonic_bto",
+      "acoustic_mass_amu": 46.44,
+      "b11_ev": 126.137,
+      "b12_ev": 42.391,
+      "b44_ev": 50.046,
+      "b1xx_ev_per_angstrom2": -235.064,
+      "b1yy_ev_per_angstrom2": -19.341,
+      "b4yz_ev_per_angstrom2": -15.333,
+      "bare_b1": 0.15684316660555703,
+      "bare_b2": 0.9529547968849545,
+      "homogeneous_lambda_b1": -0.05514088168711682,
+      "homogeneous_lambda_b2": 1.5742618204178462
+    }
+  }
+}

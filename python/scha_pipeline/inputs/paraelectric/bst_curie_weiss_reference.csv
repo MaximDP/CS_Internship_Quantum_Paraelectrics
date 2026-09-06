@@ -1,0 +1,4 @@
+x_ba,T0_K,T0_uncertainty_K,curie_constant_K,curie_constant_relative_uncertainty,measurement_frequency_Hz,sample_type,source,provenance
+0.4,190,10,100000,0.20,10000,high-density ceramic,Weerasinghe2013,"T0 digitized from the experimental 10 kHz inset of Fig. 1(a); C reported as order 1e5 K for every composition"
+0.5,230,10,100000,0.20,10000,high-density ceramic,Weerasinghe2013,"T0 digitized from the experimental 10 kHz inset of Fig. 1(a); C reported as order 1e5 K for every composition"
+0.6,265,10,100000,0.20,10000,high-density ceramic,Weerasinghe2013,"T0 digitized from the experimental 10 kHz inset of Fig. 1(a); C reported as order 1e5 K for every composition"

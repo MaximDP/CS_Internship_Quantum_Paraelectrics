@@ -1,0 +1,255 @@
+% Annexe de reconstruction numérique, déplacée hors du corps principal.
+% =============================================================================
+\section{Jeux de paramètres et reconstruction numérique du noyau}
+\label{sec:core_parameter_sets}
+% =============================================================================
+
+Cette section remplace une dépendance implicite à un fichier de code par une
+fiche de reconstruction lisible. Les valeurs intermédiaires sont données dans
+la convention du mode local ; les grandeurs de polarisation se déduisent avec
+$s=\Omega_0/Z^*$ :
+\begin{equation}
+\begin{gathered}
+A^{(P)}=s^2A^{(u)},\qquad
+m_P=s^2M^*,\qquad
+\beta^{(P)}=s^4\beta^{(u)},\\
+\gamma^{(P)}=s^6\gamma^{(u)},\qquad
+\rho^{(P)}=s^8\rho^{(u)},\qquad
+G_P=s^{-2}G_u .
+\end{gathered}
+\label{eq:core_parameter_scaling}
+\end{equation}
+Pour convertir un coefficient fourni en
+$\mathrm{eV/\mathring A^n}$,
+\begin{equation}
+X\,[\mathrm{Ha/bohr^n}]
+=\frac{X\,[\mathrm{eV/\mathring A^n}]}{27.211386245988}
+(0.529177210903)^n .
+\label{eq:core_ev_angstrom_conversion}
+\end{equation}
+Tous les chiffres dérivés ci-dessous conservent la précision de leur source ;
+des décimales supplémentaires ne constituent pas une information physique
+supplémentaire.
+
+\subsection{BaTiO$_3$ : jeu Zhong--Vanderbilt--Rabe}
+
+Le jeu ZVR quartique~\cite{Zhong1995} utilise, en unités atomiques de mode
+local,
+\begin{equation}
+\begin{gathered}
+a_0=7.46,\qquad \Omega_0=415.160936,\\
+K_2=0.0568,\qquad Z^*=9.956,\qquad
+\varepsilon_\infty=5.24,\\
+M^*=39.05\ {\rm amu},\\
+j_1=-0.02734,\ j_2=0.04020,\ j_3=0.00927,\ j_4=-0.00815,\\
+j_5=0.00580,\ j_6=0.00370,\ j_7=0.00185 .
+\end{gathered}
+\label{eq:core_zvr_input}
+\end{equation}
+Les entrées élastiques et électrostrictives sont
+\begin{equation}
+\begin{gathered}
+B_{11}=4.64,\quad B_{12}=1.65,\quad B_{44}=1.85,\\
+B_{1xx}=-2.18,\quad B_{1yy}=-0.20,\quad B_{4yz}=-0.08,
+\end{gathered}
+\label{eq:core_zvr_elastic_input}
+\end{equation}
+les autres composantes étant générées par permutations cubiques. Le potentiel
+quartique
+$\alpha|\mathbf u|^4+\gamma(u_x^2u_y^2+u_y^2u_z^2+u_z^2u_x^2)$
+emploie $\alpha=0.320$ et $\gamma=-0.473$. Après élimination homogène,
+\begin{equation}
+b_1^{\rm proj}=0.136449,\qquad
+b_2^{\rm proj}=0.293874,\qquad
+\beta^{\rm proj}_{xxxx}=0.703221 .
+\label{eq:core_zvr_quartic_projection}
+\end{equation}
+
+La somme d'Ewald et les 26 voisins donnent
+\begin{equation}
+\begin{array}{c|rrrrr}
+&d_0&d_1&d_2&d_3&d_4\\ \hline
+\mathrm{ZVR}
+&-0.190858109&-0.4180040&-3.2341964&4.48821&0.572574326
+\end{array}
+\label{eq:core_zvr_dipolar_coeffs}
+\end{equation}
+et
+\begin{equation}
+\begin{aligned}
+J_0&=0.042200000,\\
+c_1&=-3.582850008,\qquad c_2=0.573211480,\qquad
+c_3=-1.057380400.
+\end{aligned}
+\label{eq:core_zvr_sr_derived}
+\end{equation}
+L'application directe de
+Eq.~\eqref{eq:core_five_coefficients} fournit le contrôle final :
+\begingroup\small
+\begin{equation}
+\begin{array}{c|rrrrr}
+&A_{0,1}&A_{0,2}&A_{0,3}&A_{0,4}&A_{0,5}\\ \hline
+u&-0.035058109&0.155207480&-5.348957200&0.905359992&0.572574326\\
+P&-60.96094293&269.88319108&-9301.05712750&1574.28909817&995.62331810
+\end{array}
+\label{eq:core_zvr_final_kernel}
+\end{equation}
+\endgroup
+avec $s=41.69957172$. Recalculer cette ligne à partir des entrées précédentes
+est le premier test unitaire du pipeline.
+
+\subsection{BaTiO$_3$ : jeu WC--GGA Nishimatsu--FERAM}
+
+Le second jeu provient des surfaces d'énergie WC--GGA de
+Nishimatsu~\cite{Nishimatsu2010} et de la documentation de génération des
+paramètres FERAM~\cite{FERAMParameters}. Les entrées converties sont
+\begin{equation}
+\begin{gathered}
+a_0=7.532372744,\qquad \Omega_0=427.3615143,\\
+K_2=0.087822249,\qquad Z^*=10.33,\qquad
+\varepsilon_\infty=6.8691464565,\\
+M^*=38.24\ {\rm amu},\qquad s=41.37091136,\\
+j_1=-0.0214464065,\qquad j_2=-0.0116188030,\\
+j_3=0.0070951144,\qquad j_4=-0.0062912217,\\
+j_5=0,\qquad j_6=0.0028495045,\qquad j_7=0 .
+\end{gathered}
+\label{eq:core_nish_input}
+\end{equation}
+Les coefficients élastiques sources, avant conversion, sont
+\begin{equation}
+\begin{aligned}
+B_{11}&=126.7316715\ {\rm eV},&
+B_{12}&=41.7582964\ {\rm eV},\\
+B_{44}&=49.2408864\ {\rm eV},&
+B_{1xx}&=-185.3471876\ {\rm eV/\mathring A^2},\\
+B_{1yy}&=-3.2809295\ {\rm eV/\mathring A^2},&
+B_{4yz}&=-14.5501739\ {\rm eV/\mathring A^2}.
+\end{aligned}
+\label{eq:core_nish_elastic_source}
+\end{equation}
+Le potentiel local emploie
+\begin{equation}
+\begin{gathered}
+\alpha=0.2276183984,\qquad \gamma=-0.3327945785,\\
+k_1=-0.2162513067,\qquad k_2=0.1593766928,\\
+k_3=0.6699445355,\qquad k_4=0.1450680738,
+\end{gathered}
+\label{eq:core_nish_anharmonic}
+\end{equation}
+en $\mathrm{Ha/bohr^4}$, $\mathrm{Ha/bohr^6}$ et
+$\mathrm{Ha/bohr^8}$ selon l'ordre. Après projection homogène,
+$b_1^{\rm proj}=0.1119078117$ et $b_2^{\rm proj}=0.1158966279$.
+
+Les coefficients dérivés sont
+\begin{equation}
+\begin{aligned}
+d_0&=-0.1522618376,&d_1&=-0.3399749261,&
+d_2&=-2.6304665897,\\
+d_3&=3.6503913681,&d_4&=0.4567855127,\\
+J_0&=-0.0546311676,&c_1&=-2.0765766351,\\
+c_2&=0.4788914499,&c_3&=0.
+\end{aligned}
+\label{eq:core_nish_derived}
+\end{equation}
+On obtient
+\begingroup\small
+\begin{equation}
+\begin{array}{c|rrrrr}
+&A_{0,1}&A_{0,2}&A_{0,3}&A_{0,4}&A_{0,5}\\ \hline
+u&-0.03124850714&0.1389165238&-2.6304665897&1.5738147330&0.4567855127\\
+P&-53.48345447&237.76289673&-4502.18115849&2693.66623606&781.81229778
+\end{array}
+\label{eq:core_nish_final_kernel}
+\end{equation}
+\endgroup
+À $500\,\mathrm K$ et pression nulle, la fermeture locale projetée
+simplifiée, sur grille $48^3$, donne
+\begin{equation}
+\begin{aligned}
+A_1^{(u)}&=0.002930749645,&
+\Delta A_1^{(4)}&=0.055301815578,\\
+\Delta A_1^{(6)}&=-0.028554029685,&
+\Delta A_1^{(8)}&=0.007431470895.
+\end{aligned}
+\label{eq:core_nish_500k_check}
+\end{equation}
+Ce contrôle concerne le solveur \texttt{scha\_paraelc.py}, qui traite
+$\beta_{\rm proj}=\beta-\Lambda^{\rm hom}/2$ comme un vertex local.
+Il ne valide pas la fermeture finale à secteurs homogène et inhomogène
+séparés : celle-ci conserve le terme homogène collectif
+$-\Lambda^{\rm hom}G/2$, au lieu de la contribution locale projetée
+$-3\Lambda^{\rm hom}G/2$, ainsi que la convolution acoustique distincte.
+Le passage de $40^3$ à $48^3$ déplace $A_1^{(u)}$ de
+$0.0029264173$ à $0.0029307496$.
+
+\subsection{SrTiO$_3$ : jeu Nishimatsu 2016}
+
+Le tableau complet pour SrTiO$_3$ a été publié ultérieurement
+~\cite{Nishimatsu2016}. Les entrées de structure et de dynamique sont
+\begin{equation}
+\begin{gathered}
+a_0=3.901\ \mathring{\rm A},\quad
+M^*_{\rm dip}=43.61\ {\rm amu},\quad
+M^*_{\rm ac}=36.70\ {\rm amu},\\
+Z^*=9.28,\qquad \varepsilon_\infty=6.46,\qquad p=0.
+\end{gathered}
+\label{eq:core_sto_basic_input}
+\end{equation}
+Les coefficients harmoniques sources, en
+$\mathrm{eV/\mathring A^2}$, sont
+\begin{equation}
+K_2=10.316,\quad
+(j_1,\ldots,j_7)=(-2.012,-1.815,0.590,-0.567,0,0.238,0).
+\label{eq:core_sto_harmonic_source}
+\end{equation}
+Les valeurs élastiques sont
+\begin{equation}
+\begin{aligned}
+B_{11}&=131.33\ {\rm eV},&
+B_{12}&=36.26\ {\rm eV},&
+B_{44}&=41.30\ {\rm eV},\\
+B_{1xx}&=-102.09\ {\rm eV/\mathring A^2},&
+B_{1yy}&=0.5299\ {\rm eV/\mathring A^2},&
+B_{4yz}&=-15.494\ {\rm eV/\mathring A^2}.
+\end{aligned}
+\label{eq:core_sto_elastic_source}
+\end{equation}
+La source arrondit fortement ces nombres. Le contact reconstruit
+$2K_2+d_0+J_0=-0.0024173835\,\mathrm{Ha/bohr^2}$ diffère ainsi de la courbure
+indépendamment tabulée
+$2\kappa=-0.0025932963\,\mathrm{Ha/bohr^2}$. Cette dernière est retenue pour la
+masse à $\Gamma$, sans modifier la dispersion périodique hors de $\Gamma$.
+Avec $s=43.16944605$, les coefficients de diagnostic à petit $k$ sont
+\begingroup\small
+\begin{equation}
+\begin{array}{c|rrrrr}
+&A_{0,1}&A_{0,2}&A_{0,3}&A_{0,4}&A_{0,5}\\ \hline
+u&-0.0025932963&0.2689681617&-2.3065100079&1.7965640186&0.4181661231\\
+P&-4.8328697591&501.24935461&-4298.41452401&3348.0786316&779.29483544
+\end{array}
+\label{eq:core_sto_final_kernel}
+\end{equation}
+\endgroup
+Cette incohérence de précision est conservée comme incertitude de source et
+n'est pas absorbée silencieusement dans une pression ajustable.
+
+\subsection{Ordre de reconstruction à partir des tableaux}
+
+Un lecteur qui repart de ces fiches doit obtenir les mêmes objets dans l'ordre
+suivant :
+\begin{enumerate}[label=\textbf{R\arabic*.},leftmargin=3.2em,itemsep=2pt]
+  \item convertir $a_0$, $K_2$, $j_i$, $B_{\ell m}$,
+  $B_{\ell\alpha\beta}$ et les coefficients anharmoniques ;
+  \item calculer $\Omega_0$, $s$, $m_P$ et
+  $\Lambda^{\rm hom}=B^T\mathcal B^{-1}B$ ;
+  \item générer les 26 matrices $J(\mathbf n)$, puis
+  $\Phi^{\rm SR}(\mathbf k)$ ;
+  \item calculer la somme d'Ewald et vérifier $d_4$ par
+  $4\pi Z^{*2}/(\varepsilon_\infty\Omega_0)$ ;
+  \item assembler $\Phi^{\rm harm}$ et retrouver les cinq coefficients des
+  Eqs.~\eqref{eq:core_zvr_final_kernel},
+  \eqref{eq:core_nish_final_kernel} ou
+  \eqref{eq:core_sto_final_kernel} dans la limite $k\to0$ ;
+  \item seulement alors lancer la fermeture de
+  Eq.~\eqref{eq:core_scalar_residual}.
+\end{enumerate}

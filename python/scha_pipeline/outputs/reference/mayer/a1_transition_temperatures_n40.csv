@@ -1,0 +1,8 @@
+parameter_set,protocol,T_A1_to_zero_K,p_eff_at_transition_GPa,A1_limit_Ha_per_bohr2,limit_check_abs_delta_T_K,pressure_provenance
+Nishimatsu WC-GGA,zero pressure,174.7080055,0.0000000,1.0e-10,4.940e-06,none
+Nishimatsu WC-GGA,pointwise lattice match,198.0939380,-0.6930810,1.0e-10,6.589e-06,"Nakatani cubic a(T), 413-598 K; formal extrapolation"
+Nishimatsu WC-GGA,affine lattice pressure,198.8648056,-0.7157328,1.0e-10,6.482e-06,affine compression fitted over 400-565 K; extrapolated
+Nishimatsu WC-GGA,Wieczorek response fit,385.1603958,-5.7495453,1.0e-10,7.302e-06,fit over 415.65-448.15 K; extrapolated
+Mayer PBEsol anharmonic,zero pressure,170.6798408,0.0000000,1.0e-10,4.453e-06,none
+Mayer PBEsol anharmonic,pointwise lattice match,172.7661108,-0.0832428,1.0e-10,5.180e-06,"Nakatani cubic a(T), 413-598 K; formal extrapolation"
+Mayer PBEsol anharmonic,affine lattice pressure,169.6995074,0.0386644,1.0e-10,5.165e-06,affine compression fitted over 400-800 K; extrapolated

@@ -1,0 +1,38 @@
+{
+  "status": "provisional one-shot projected-local quartic post-SCHA",
+  "model": "mayer_2022_pbesol_anharmonic_bto",
+  "sample_method": "scrambled Sobol on two independent BZ momenta",
+  "sample_power": 12,
+  "sample_count": 4096,
+  "sobol_seed": 20220812,
+  "imaginary_time_quadrature": "Gauss-Legendre",
+  "tau_order": 24,
+  "included": [
+    "full quantum SCHA propagator including periodic dipolar kernel",
+    "two-vertex projected-local quartic sunset",
+    "local sextic contractions dressing the quartic vertex",
+    "local octic contractions dressing the quartic vertex",
+    "zero-pressure SCHA background",
+    "existing lattice-matched-pressure SCHA background"
+  ],
+  "excluded": [
+    "separate dynamic inhomogeneous-strain sunset vertices",
+    "quartic-sextic, sextic-sextic, sextic-octic and octic-octic skeletons",
+    "post-SCHA refit of the lattice-matching pressure",
+    "self-consistent Dyson or 2PI resummation"
+  ],
+  "sign_convention": "Gamma^(2)=A_SCHA+Sigma_post; negative delta_A1 softens the mode",
+  "stability": {
+    "zero": {
+      "stable_points": 0,
+      "total_points": 41,
+      "maximum_abs_delta_over_A1": 2.453820650858526
+    },
+    "lattice_matched": {
+      "stable_points": 0,
+      "total_points": 41,
+      "maximum_abs_delta_over_A1": 4.942408686368283
+    }
+  },
+  "numerical_error_note": "The per-row iid_se_diagnostic is the dispersion of integrand samples divided by sqrt(N); it is not a rigorous randomized-QMC confidence interval. Independent scrambled-Sobol convergence must be used for a production uncertainty."
+}

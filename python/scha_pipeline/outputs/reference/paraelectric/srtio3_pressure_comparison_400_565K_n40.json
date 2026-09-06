@@ -1,0 +1,38 @@
+{
+  "material": "nishimatsu_2016_sto",
+  "ngrid": 40,
+  "temperature_start_K": 400.0,
+  "temperature_stop_K": 565.0,
+  "temperature_step_K": 5.0,
+  "pressure_reference_temperature_K": 482.5,
+  "lattice_pressure_slope_GPa_per_K": -0.004809888468909869,
+  "lattice_pressure_at_reference_GPa": -1.0192470944456664,
+  "dielectric_pressure_slope_GPa_per_K": 0.013826483095218235,
+  "dielectric_pressure_at_reference_GPa": 4.65208496467855,
+  "lattice_fit_rmse_angstrom": 1.5390943921514275e-06,
+  "lattice_fit_max_abs_error_angstrom": 3.214803845352776e-06,
+  "zero_pressure_metrics": {
+    "rmse_chi": 11.954785604175672,
+    "mean_absolute_relative_error_percent": 86.70780716292646,
+    "max_absolute_relative_error_percent": 95.46886518957582
+  },
+  "lattice_pressure_metrics": {
+    "rmse_chi": 17.44896083805417,
+    "mean_absolute_relative_error_percent": 127.37684889241959,
+    "max_absolute_relative_error_percent": 149.40929978438012
+  },
+  "dielectric_pressure_metrics": {
+    "rmse_chi": 0.015538685326834946,
+    "mean_absolute_relative_error_percent": 0.09775003001409105,
+    "max_absolute_relative_error_percent": 0.2581137036680417
+  },
+  "barrett_parameters": {
+    "C_K": 80000.0,
+    "T0_K": 35.5,
+    "T1_K": 80.0
+  },
+  "lattice_reference": {
+    "a_at_300_K_angstrom": 3.905268,
+    "volumetric_expansion_per_K": 3.23e-05
+  }
+}

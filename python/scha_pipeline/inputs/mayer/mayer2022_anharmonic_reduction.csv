@@ -1,0 +1,3 @@
+parameter,conventional_value,effective_value,unit,provenance
+k1,-528.388,-1443.850,eV/angstrom^6,"Eq. (4) minimized over v1,v2 and E001 refitted over u=0..0.25 angstrom"
+k4,3370.229,17216.816,eV/angstrom^8,"Eq. (4) minimized over v1,v2 and E001 refitted over u=0..0.25 angstrom"

@@ -1,0 +1,203 @@
+% =============================================================================
+\section{Extension formelle : fermeture SCHA en phase ferroélectrique}
+\label{sec:core_ferroelectric_extension}
+% =============================================================================
+
+Cette annexe est une extension complémentaire. Elle n'est utilisée ni dans le
+solveur numérique paraélectrique, ni dans les courbes, ni dans les prédictions
+présentées dans ce rapport. Le calcul effectivement exécuté reste celui de la
+branche centrée $\overline{\mathbf P}=0$ décrit dans
+Sec.~\ref{ann:scha_reponse}.
+
+Dans une éventuelle généralisation à la phase de symétrie brisée, le fond
+statique homogène deviendrait une variable variationnelle :
+\begin{equation}
+\overline p_{\min}^{\alpha}(k,\omega_n)
+=\sqrt{\beta\hbar}\,p_{\min}^{\alpha}(T)\frac{(2\pi)^3}{\Omega}
+\delta^{(3)}(k)\delta_{n,0},
+\qquad
+p'^\alpha=p^\alpha-\overline p_{\min}^{\alpha}.
+\label{eq:core_ferro_shift}
+\end{equation}
+La mesure gaussienne est centrée sur $p'=0$, tandis que le champ physique vaut
+$\widehat p=p'+\overline p_{\min}$. L'énergie libre variationnelle dépendrait
+alors simultanément du noyau anisotrope $A$ et des trois composantes du
+centroïde :
+\begin{equation}
+F_{\mathrm{var}}(T;A,\mathbf p_{\min})
+=-k_BT\ln Z_0[A]
++\left\langle V(\widehat{\mathbf p})-V_0(\mathbf p')\right\rangle_A.
+\label{eq:core_ferro_variational_free_energy}
+\end{equation}
+L'évaluation de cette fonctionnelle ne requiert pas une nouvelle règle de
+contraction. En posant $\widehat P_a=\overline P_a+\xi_a$, avec
+$\langle\xi_a\rangle_A=0$ et $\langle\xi_a\xi_b\rangle_A=G_{ab}$, tout
+moment est obtenu par l'identité compacte
+\begin{equation}
+\left\langle\prod_{j=1}^{r}\widehat P_{a_j}\right\rangle_A
+=\sum_{\substack{S\subset\{1,\ldots,r\}\\r-|S|\;\mathrm{pair}}}
+\left(\prod_{i\in S}\overline P_{a_i}\right)
+\sum_{\text{appariements de }\bar S}
+\prod_{(i,j)}G_{a_i a_j}.
+\label{eq:core_ferro_general_wick_rule}
+\end{equation}
+Cette formule engendre mécaniquement les termes à deux, quatre, six et huit
+jambes : tout terme comportant un nombre impair de fluctuations $\xi$ est nul.
+Elle fournit donc une prescription calculable pour développer les vertices
+locaux sans avoir à réécrire séparément leurs dizaines de contractions.
+
+Pour rendre les équations à résoudre explicites, notons
+$V_{\rm eff}[P]$ le potentiel complet après élimination des deux secteurs de
+déformation. La stationnarité de la fonctionnelle précédente prend la forme
+générale
+\begin{equation}
+\boxed{\quad A_{ab}(K)=A_{0,ab}(K)
++\left\langle
+\frac{\delta^2V_{\rm eff}^{\rm anh}}
+{\delta P_a(-K)\,\delta P_b(K)}
+\right\rangle_{\overline P,G},
+\qquad
+0=\left\langle
+\frac{\delta V_{\rm eff}}{\delta P_a}
+\right\rangle_{\overline P,G}.\quad}
+\label{eq:core_ferro_general_scha_equations}
+\end{equation}
+Dans les conventions intensives du présent rapport, la première de ces deux
+conditions donne explicitement la fermeture ferroélectrique finale
+\begin{mdframed}[linecolor=red!60!black,nobreak=true]
+\small
+\begin{equation}
+\begin{aligned}
+A_{ab}(K)={}&A_{0,ab}(K)
++3\beta_{ab\gamma\delta}
+\big(G^{\gamma\delta}+\overline P^\gamma\overline P^\delta\big)
+-\frac12\Lambda^{\rm hom}_{ab\gamma\delta}
+\big(G^{\gamma\delta}+\overline P^\gamma\overline P^\delta\big)\\
+&-\mathcal I^{\rm inh}_{ab}(K;A)
+-\mathcal M^{\rm inh}_{a\gamma,b\delta}(K)
+\overline P^\gamma\overline P^\delta\\
+&+15\gamma_{ab\gamma\delta\epsilon\zeta}
+\left[G^{\gamma\delta}G^{\epsilon\zeta}
++2\overline P^\gamma\overline P^\delta G^{\epsilon\zeta}
++\frac13\overline P^\gamma\overline P^\delta
+\overline P^\epsilon\overline P^\zeta\right]\\
+&+105\rho_{ab\gamma\delta\epsilon\zeta\eta\theta}
+\Big[G^{\gamma\delta}G^{\epsilon\zeta}G^{\eta\theta}
++3\overline P^\gamma\overline P^\delta
+G^{\epsilon\zeta}G^{\eta\theta}\\[-2pt]
+&\hspace{33mm}
++\overline P^\gamma\overline P^\delta
+\overline P^\epsilon\overline P^\zeta G^{\eta\theta}
++\frac1{15}\overline P^\gamma\overline P^\delta
+\overline P^\epsilon\overline P^\zeta
+\overline P^\eta\overline P^\theta\Big].
+\end{aligned}
+\label{eq:core_ferro_full_closure}
+\end{equation}
+\end{mdframed}
+Cette écriture vaut pour les modes non uniformes $K\neq0$. Le terme éliminé
+de déformation homogène,
+$-\Lambda^{\rm hom}_{\alpha\beta\gamma\delta}
+(\sum_iP_i^\alpha P_i^\beta)(\sum_jP_j^\gamma P_j^\delta)/(8N)$, induit en
+outre une correction réservée au seul mode statique uniforme. Plutôt que de
+l'insérer par des deltas dans le noyau général, on l'ajoute séparément : le
+membre de droite de l'Eq.~\eqref{eq:core_ferro_full_closure}, évalué à $K=0$,
+reçoit le terme supplémentaire
+\begin{equation}
+ -\Lambda^{\rm hom}_{a\gamma b\delta}
+ \overline P^\gamma\overline P^\delta.
+\label{eq:core_ferro_homogeneous_uniform_channel}
+\end{equation}
+Le terme
+$\mathcal M^{\rm inh}_{a\gamma,b\delta}(K)
+\overline P^\gamma\overline P^\delta$ est l'analogue provenant de la
+déformation inhomogène, mais il conserve une dépendance générale en $K$.
+Les deux doivent être conservés si la fermeture ferroélectrique est
+effectivement implémentée. À $\overline P=0$, ils disparaissent et
+l'Eq.~\eqref{eq:core_ferro_full_closure} redonne
+l'Eq.~\eqref{eq:core_full_scha_tensor}.
+\needspace{15\baselineskip}
+La première équation détermine le noyau et la seconde le centroïde. Par
+exemple, si l'on isole les vertices locaux du potentiel, elles contiennent
+explicitement
+\begin{equation}
+\begin{aligned}
+\Pi_{ab}^{\rm loc}={}&3\beta_{ab\gamma\delta}
+\langle\widehat P_\gamma\widehat P_\delta\rangle
++5\gamma_{ab\gamma\delta\epsilon\zeta}
+\langle\widehat P_\gamma\widehat P_\delta
+\widehat P_\epsilon\widehat P_\zeta\rangle\\
+&+7\rho_{ab\gamma\delta\epsilon\zeta\eta\theta}
+\langle\widehat P_\gamma\widehat P_\delta
+\widehat P_\epsilon\widehat P_\zeta
+\widehat P_\eta\widehat P_\theta\rangle .
+\end{aligned}
+\label{eq:core_ferro_local_self_energy}
+\end{equation}
+\begin{equation}
+\begin{aligned}
+0={}&A_{0,ab}(0)\overline P_b
++\beta_{abcd}\langle\widehat P_b\widehat P_c\widehat P_d\rangle\\
+&+\gamma_{abcdef}\langle\widehat P_b\widehat P_c\widehat P_d
+\widehat P_e\widehat P_f\rangle
++\rho_{abcdefgh}\langle\widehat P_b\widehat P_c\widehat P_d
+\widehat P_e\widehat P_f\widehat P_g\widehat P_h\rangle\\
+&+\left\langle\frac{\delta V_{\rm strain}}{\delta P_a}\right\rangle .
+\end{aligned}
+\label{eq:core_ferro_centroid_equation}
+\end{equation}
+Les indices sont contractés selon la convention d'Einstein, et
+$V_{\rm strain}$ désigne les termes homogène et inhomogène non locaux. Les
+moments de ces deux équations se déduisent directement de
+l'Eq.~\eqref{eq:core_ferro_general_wick_rule}; le système est donc défini sans
+ambiguïté, même si sa résolution dépasse le périmètre numérique du présent
+rapport.
+Les deux conditions de stationnarité seraient
+\begin{equation}
+A_{ab}(K)=A_{0,ab}(K)
++\Pi_{ab}(K;A,\mathbf p_{\min}),
+\qquad
+\frac{\partial F_{\mathrm{var}}}
+{\partial p_{\min}^{a}}=0.
+\label{eq:core_ferro_stationarity}
+\end{equation}
+La self-énergie $\Pi$ contiendrait les contractions locales quartiques,
+sextiques et octiques, ainsi que les secteurs $\Lambda^{\mathrm{hom}}$ et
+$\mathcal M^{\mathrm{inh}}$, avec leurs termes croisés en
+$p_{\min}^{a}p_{\min}^{b}$.
+
+Les moments déplacés nécessaires à cette extension seraient générés par
+\begin{equation}
+\langle\widehat P_a\widehat P_b\rangle
+=\overline P_a\overline P_b+G_{ab},
+\label{eq:core_shifted_second_moment}
+\end{equation}
+et, pour le rang quatre,
+\begin{equation}
+\begin{aligned}
+\langle\widehat P_a\widehat P_b\widehat P_c\widehat P_d\rangle
+={}&\overline P_a\overline P_b\overline P_c\overline P_d\\
+&+\overline P_a\overline P_bG_{cd}
++\overline P_a\overline P_cG_{bd}
++\overline P_a\overline P_dG_{bc}\\
+&+\overline P_b\overline P_cG_{ad}
++\overline P_b\overline P_dG_{ac}
++\overline P_c\overline P_dG_{ab}\\
+&+G_{ab}G_{cd}+G_{ac}G_{bd}+G_{ad}G_{bc}.
+\end{aligned}
+\label{eq:core_shifted_fourth_moment}
+\end{equation}
+Les rangs six et huit suivraient la même règle : choisir les facteurs portés
+par le centroïde, puis apparier les fluctuations restantes.
+
+Un solveur dédié à cette extension devrait traiter les neuf inconnues
+\begin{equation}
+\mathbf x=
+\big(A_{xx},A_{yy},A_{zz},A_{xy},A_{xz},A_{yz},
+\overline P_x,\overline P_y,\overline P_z\big),
+\label{eq:core_ferro_unknown_vector}
+\end{equation}
+avec six résidus issus de $A-A_0-\Pi[A,\overline{\mathbf P}]$ et trois
+conditions $\partial F_{\rm var}/\partial\overline P_a=0$. Ce solveur n'est pas
+appelé dans la chaîne numérique auditée et aucune direction ferroélectrique
+n'est utilisée pour produire les résultats du présent travail.

@@ -1,0 +1,55 @@
+{
+  "temperature_display_K": [
+    300.0,
+    600.0,
+    10.0
+  ],
+  "pressure_fit_domain_K": [
+    400.0,
+    600.0,
+    20.0
+  ],
+  "central_mode_crossover_K": 365.0,
+  "reference": "inputs/paraelectric/bst_curie_weiss_reference.csv",
+  "compositions": [
+    {
+      "x_ba": 0.4,
+      "ngrid": 40.0,
+      "T0_reference_K": 190.0,
+      "curie_constant_reference_K": 100000.0,
+      "pressure_slope_GPa_per_K": 0.004623711592787267,
+      "pressure_intercept_GPa": -1.9068009855674122,
+      "exact_pressure_min_GPa": -0.03446881645644705,
+      "exact_pressure_max_GPa": 0.9096464361822789,
+      "pressure_fit_rmse_GPa": 0.019965010351385377,
+      "epsilon_relative_error_rms_fit": 0.003372585235193394,
+      "epsilon_relative_error_max_fit": 0.0061175832195832225
+    },
+    {
+      "x_ba": 0.5,
+      "ngrid": 40.0,
+      "T0_reference_K": 230.0,
+      "curie_constant_reference_K": 100000.0,
+      "pressure_slope_GPa_per_K": 0.004218667926010951,
+      "pressure_intercept_GPa": -2.380601411169467,
+      "exact_pressure_min_GPa": -0.674021929356331,
+      "exact_pressure_max_GPa": 0.18988842688919788,
+      "pressure_fit_rmse_GPa": 0.018107880341771118,
+      "epsilon_relative_error_rms_fit": 0.0033859575768010004,
+      "epsilon_relative_error_max_fit": 0.006159639077143897
+    },
+    {
+      "x_ba": 0.6,
+      "ngrid": 40.0,
+      "T0_reference_K": 265.0,
+      "curie_constant_reference_K": 100000.0,
+      "pressure_slope_GPa_per_K": 0.004140289859748263,
+      "pressure_intercept_GPa": -2.9804809312147755,
+      "exact_pressure_min_GPa": -1.312035424145856,
+      "exact_pressure_max_GPa": -0.4652569810869613,
+      "pressure_fit_rmse_GPa": 0.013698652636323761,
+      "epsilon_relative_error_rms_fit": 0.0027577683050518335,
+      "epsilon_relative_error_max_fit": 0.005252244087695868
+    }
+  ]
+}

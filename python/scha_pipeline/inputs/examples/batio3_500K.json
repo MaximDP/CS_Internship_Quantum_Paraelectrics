@@ -1,0 +1,6 @@
+{
+  "material": "nishimatsu",
+  "temperature_K": 500.0,
+  "ngrid": 40,
+  "tolerance": 1e-12
+}
