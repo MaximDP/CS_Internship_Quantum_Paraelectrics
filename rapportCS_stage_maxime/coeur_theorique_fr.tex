@@ -2398,28 +2398,23 @@ anharmonique, avec un choix explicite d’ancrage harmonique décrit ci-dessous.
 « mêmes coefficients que dans la paramétrisation initiale » : ces derniers sont
 précisément renormalisés par l'élimination adiabatique.
 
-Pour la reconstruction numérique, la courbure uniforme est fixée à
-$A_{0,1}^{(u)}=2\kappa=-0.0404430732\,\mathrm{Ha/bohr^2}$.
-La combinaison directe de $\kappa_2$, $j_i$, $Z^*$, $\varepsilon_\infty$ et
-$a_0$ publiés donne plutôt
-$\Phi_{\Gamma}^{\rm brut}=-0.0412428397\,\mathrm{Ha/bohr^2}$ dans la
-convention d'Ewald retenue. Le code utilise donc
-$\Phi(\mathbf k)-\Phi_{\Gamma}^{\rm brut}\mathbb I+A_1^{(u)}\mathbb I$,
-soit un ancrage harmonique distinct, de décalage nu
-$7.998\times10^{-4}\,\mathrm{Ha/bohr^2}$. Cet écart ne s'explique pas par le
-seul arrondi des paramètres affichés et ne doit pas être confondu avec une
-correction SCHA. La comparaison avec la MD publiée porte ainsi sur le même
-potentiel anharmonique réduit, avec cette réserve harmonique et avec la
-distinction entre statistiques classique et quantique. À $500\,\mathrm K$, pression nulle
-et grille $40^3$, remplacer cet ancrage par la valeur brute augmente la
-susceptibilité gaussienne d'environ $1.70\,\%$ ; ce test ponctuel ne constitue
-pas une borne uniforme en température.
-Les courbes conservent également la masse acoustique de calcul
-$46.44\,\mathrm{amu}$, distincte des $46.64\,\mathrm{amu}$ de la
-Table I de Nishimatsu~\cite{Nishimatsu2016}. À $500\,\mathrm K$, pression nulle
-et grille $40^3$, employer cette dernière valeur modifie $\chi$ de moins de
-$0.0003\,\%$ pour les jeux BaTiO$_3$ Nishimatsu et Mayer. La valeur historique
-est indiquée pour permettre la reproduction exacte des courbes.
+Dans les calculs présentés ici, la courbure harmonique du mode uniforme est
+fixée à $A_{0,1}^{(u)}=2\kappa$, afin de reprendre celle du potentiel
+$E_{001}(u)$ de Mayer. La reconstruction du noyau à partir des autres
+paramètres publiés donne une valeur légèrement différente dans la convention
+d'Ewald utilisée ; son origine reste à préciser. Nous conservons donc la
+dispersion ainsi reconstruite et ajustons sa valeur en $\Gamma$ à
+$2\kappa$, avant de calculer les corrections SCHA. À $500\,\mathrm K$,
+sous pression nulle et sur une grille $40^3$, retenir plutôt la valeur
+reconstruite augmente la susceptibilité d'environ $1.7\,\%$. Cette sensibilité,
+évaluée à une seule température, accompagne la comparaison avec la dynamique
+moléculaire : les deux approches reprennent le même potentiel anharmonique
+réduit, mais diffèrent par ce choix harmonique et par le traitement classique
+ou quantique des fluctuations.\footnote{La masse acoustique utilisée pour les
+courbes est $46.44\,\mathrm{amu}$, au lieu des $46.64\,\mathrm{amu}$ de
+Nishimatsu~\cite{Nishimatsu2016}. Dans les mêmes conditions de calcul à
+$500\,\mathrm K$, cette différence modifie la susceptibilité de moins de
+$0.0003\,\%$ pour les deux jeux de paramètres BaTiO$_3$ considérés.}
 
 \begin{figure}[H]
 \centering
