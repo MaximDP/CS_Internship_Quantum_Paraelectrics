@@ -84,7 +84,7 @@ c_3=-1.057380400.
 \label{eq:core_zvr_sr_derived}
 \end{equation}
 L'application directe de
-Eq.~\eqref{eq:core_five_coefficients} fournit le contrôle final :
+l'équation~\eqref{eq:core_five_coefficients} fournit le contrôle final :
 \begingroup\small
 \begin{equation}
 \begin{array}{c|rrrrr}
@@ -96,7 +96,7 @@ P&-60.96094293&269.88319108&-9301.05712750&1574.28909817&995.62331810
 \end{equation}
 \endgroup
 avec $s=41.69957172$. Recalculer cette ligne à partir des entrées précédentes
-est le premier test unitaire du pipeline.
+est le premier test unitaire de la chaîne de calcul.
 
 \subsection{BaTiO$_3$ : jeu WC--GGA Nishimatsu--FERAM}
 
@@ -247,9 +247,9 @@ suivant :
   \item calculer la somme d'Ewald et vérifier $d_4$ par
   $4\pi Z^{*2}/(\varepsilon_\infty\Omega_0)$ ;
   \item assembler $\Phi^{\rm harm}$ et retrouver les cinq coefficients des
-  Eqs.~\eqref{eq:core_zvr_final_kernel},
+  équations~\eqref{eq:core_zvr_final_kernel},
   \eqref{eq:core_nish_final_kernel} ou
   \eqref{eq:core_sto_final_kernel} dans la limite $k\to0$ ;
   \item seulement alors lancer la fermeture de
-  Eq.~\eqref{eq:core_scalar_residual}.
+  l'équation~\eqref{eq:core_scalar_residual}.
 \end{enumerate}

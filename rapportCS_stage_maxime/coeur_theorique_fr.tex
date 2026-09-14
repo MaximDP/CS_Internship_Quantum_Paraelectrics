@@ -11,15 +11,10 @@
 
 Ce chapitre constitue le début du cahier de calcul. Il est volontairement plus
 détaillé qu'une présentation destinée à un article : le lecteur doit pouvoir
-repartir des paramètres publiés, vérifier les facteurs de volume et reconstruire
-le noyau envoyé au solveur. Chaque transformation suit donc le même schéma :
-
-\begin{enumerate}[label=\textbf{Étape \arabic*.},leftmargin=5.2em,itemsep=2pt]
-  \item préciser les variables, les unités et la convention de Fourier ;
-  \item écrire le terme discret avant toute approximation ;
-  \item effectuer analytiquement l'élimination ou le changement de variable ;
-  \item identifier la quantité effectivement calculée par le code ;
-\end{enumerate}
+repartir des paramètres publiés
+\hyperref[sec:core_parameter_sets]{\textcolor{blue}{(Annexe~A)}}, vérifier les
+facteurs de volume et reconstruire le noyau envoyé au solveur. Pour chaque transformation, je donne l'expression
+discrète, l'opération effectuée et l'objet implémenté.
 
 \subsection{Préambule : origine du modèle et conventions}
 \label{sec:origin_dft}
@@ -139,7 +134,7 @@ $\mathbf q^T\boldsymbol\eta=\operatorname{tr}\boldsymbol\varepsilon$.
 \par\medskip
 \noindent\textbf{Première zone de Brillouin.}
 Un cristal parfait est une structure très symétrique : il peut être essentiellement décrit par la répétition
-périodique d'une unité élémentaire ; il n'est donc pas surprenent qu'une description simple équivalente existe en
+périodique d'une unité élémentaire ; il n'est donc pas surprenant qu'une description simple équivalente existe en
 espace réciproque (ou espace de Fourier/des vecteurs d'ondes).
 Pour un réseau cubique primitif de paramètre $a_0$ et de volume
 $\Omega_0=a_0^3$, la première zone de Brillouin émerge donc directement de la
@@ -203,9 +198,8 @@ $\Gamma$. Le noyau dipôle--dipôle constitue l'exception importante : son
 projecteur $k_\alpha k_\beta/k^2$ dépend de la direction
 $\widehat{\mathbf n}$, tandis que la valeur au point exact $\Gamma$ dépend des
 conditions électriques macroscopiques aux surfaces. Cette distinction sera
-reprise explicitement dans la
-\hyperref[sec:core_dipolar_kernel]{\textcolor{blue}{discussion du noyau
-dipolaire (section~\ref*{sec:core_dipolar_kernel})}}.
+reprise explicitement dans la discussion du noyau dipolaire
+(\hyperref[sec:core_dipolar_kernel]{\textcolor{blue}{section~\ref*{sec:core_dipolar_kernel}}}).
 
 La somme directe sur le réseau correspond en espace réciproque à une somme sur les
 vecteurs d'onde indépendants, donc dans la première zone de Brillouin.
@@ -354,9 +348,8 @@ l'équation~\eqref{eq:core_local_potential_tensor}.
 
 \subsection{Élimination de la déformation homogène}
 
-Par élimination, il faut convenir qu'il ne s'agit que d'une élimination au sens où
-la variable éliminée n'apparaît plus dans l'expression finale, son effet, lui, est toujours
-pris en compte car on s'appuie essentiellement sur une identité algébrique exacte.
+Éliminer la déformation la retire de l'expression finale, tout en conservant son
+effet dans les termes induits.
 C'est typiquement le mécanisme décrit dans la
 \hyperref[sec:core_effective_coefficients]{\textcolor{blue}{section~\ref*{sec:core_effective_coefficients}}} :
 les degrés de liberté intégrés ne disparaissent pas physiquement, mais se
@@ -578,6 +571,7 @@ périodique sur toute la zone de Brillouin ; l'expansion à petit
 $k$ sert uniquement à interpréter la limite continue à basse énergie.
 
 \subsubsection{Deux niveaux de description : base cubique et noyau périodique}
+\label{sec:core_periodic_kernel_descriptions}
 
 La logique de la construction repose sur deux représentations complémentaires,
 qu'il ne faut pas confondre. Pour établir la théorie de champ, on ne cherche
@@ -782,9 +776,9 @@ c_1=G_{11}^{\rm SR}-G_{12}^{\rm SR}-G_{44}^{\rm SR}.
 \end{aligned}
 \label{eq:core_sr_coefficients}
 \end{equation}
-Prolonger Eq.~\eqref{eq:core_sr_small_k} jusqu'au bord de zone rend
+Prolonger l'équation~\eqref{eq:core_sr_small_k} jusqu'au bord de zone rend
 artificiellement instable le point $R$ pour certains jeux de paramètres. Le
-solveur emploie donc Eq.~\eqref{eq:core_full_sr_kernel} dans toutes les
+solveur emploie donc l'équation~\eqref{eq:core_full_sr_kernel} dans toutes les
 intégrales et ne réserve l'expansion qu'à la réponse macroscopique.
 
 \subsubsection{Somme d'Ewald du noyau dipolaire}
@@ -913,7 +907,7 @@ $A_1=\lim_{\kappa\to0^+}
 $\mathbf e_T\!\cdot\!\widehat{\mathbf n}=0$ ; elle ne dépend donc pas du terme
 de dépolarisation longitudinal. Une comparaison à une géométrie ouverte ou à
 une réponse longitudinale exigerait en revanche d'ajouter explicitement
-Eq.~\eqref{eq:core_dipole_surface_term}.
+l'équation~\eqref{eq:core_dipole_surface_term}.
 
 \subsubsection{Assemblage sans double comptage}
 
@@ -1121,8 +1115,8 @@ e^{-\mathcal S_E[\mathbf P,\mathbf w]/\hbar},\\
 \end{mdframed}
 L'étoile rappelle que $\boldsymbol\eta^{\rm hom}$ a déjà été remplacée par sa
 valeur stationnaire. En revanche, $\mathbf w(\mathbf x,\tau)$ reste à ce stade
-un champ intégré sur toutes ses trajectoires : éliminer la déformation
-inhomogène avant cette étape était impossible, sans performer l'intégrale gaussienne.
+un champ intégré sur toutes ses trajectoires : l'élimination de la déformation
+inhomogène requiert l'évaluation de l'intégrale gaussienne.
 Dans la limite semi-classique, l'intégrale
 fonctionnelle s'évalue par la méthode de Laplace, ou approximation du
 point selle. Les configurations stationnaires satisfaisant
@@ -1275,8 +1269,7 @@ modifie pas les équations polaires.
 Cette intégration conserve la dépendance en impulsion et en fréquence du
 vertex quartique médié par les phonons acoustiques. Les trois interactions
 $\beta$, $\Lambda^{\rm hom}$ et $\mathcal M^{\rm inh}$ restent donc séparées
-dans la fermeture auto-cohérente. L'action polaire obtenue après cette étape,
-et non une énergie de Landau ajustée, constitue le point d'entrée de la SCHA.
+dans la fermeture auto-cohérente.
 
 % =============================================================================
 \section{Fermeture harmonique auto-cohérente et réponse diélectrique}
@@ -1364,6 +1357,7 @@ auto-cohérente resomme la suite des contributions \emph{daisy} et
 
 
 \subsection{Principe variationnel et contenu de l'approximation}
+\label{sec:core_scha_variational_principle}
 
 À température $T$ fixée, le potentiel anharmonique n'est pas conservé dans
 l'Hamiltonien d'essai : il est remplacé par le potentiel quadratique
@@ -1395,8 +1389,8 @@ A^{(u)}_{0,\alpha\beta}(\mathbf k,\omega_n;p)
 La somme dipolaire d'Ewald se décompose, au voisinage de $\Gamma$, en une
 partie analytique et une partie non analytique, cette dernière portant le
 projecteur longitudinal responsable de la séparation LO--TO. Le développement
-de basse énergie associé à l'Eq.~\eqref{eq:core_scha_full_bare_kernel} est
-alors précisément la base cubique de l'Eq.~\eqref{eq:core_cubic_rank_two_basis} :
+de basse énergie associé à l'équation~\eqref{eq:core_scha_full_bare_kernel} est
+alors précisément la base cubique de l'équation~\eqref{eq:core_cubic_rank_two_basis} :
 \begin{equation}
 \begin{aligned}
 A^{(u),\rm LE}_{0,\alpha\beta}(\mathbf k,\omega_n;p)
@@ -1414,7 +1408,9 @@ $A_1^{(u)}=\lim_{\kappa\to0^+}\mathbf e_T^T
 A^{(u)}(\kappa\widehat{\mathbf n},0)\mathbf e_T$, et donc la réponse uniforme
 $\chi_T\propto \big(A_1^{(u)}\big)^{-1}$. Il ne doit toutefois pas être prolongé
 artificiellement jusqu'au bord de zone : les boucles SCHA intègrent tous les
-moments $\mathbf k\in\mathrm{BZ}$ et requièrent le noyau périodique complet.
+moments $\mathbf k\in\mathrm{BZ}$ et requièrent le noyau périodique complet,
+comme expliqué en
+\hyperref[sec:core_periodic_kernel_descriptions]{\textcolor{blue}{section~\ref*{sec:core_periodic_kernel_descriptions}}}.
 Dans la fermeture cubique, la masse est calibrée par sa projection transverse
 au centre de zone, mais l'ansatz déplace cette masse de manière isotrope dans
 l'espace cartésien. La seule inconnue est ainsi l'amplitude scalaire de ce
@@ -1422,6 +1418,12 @@ décalage ; l'équation optimisée n'est pas une équation matricielle complète
 Cette réduction ne vaut plus, en général, dans la phase ferroélectrique, où la
 symétrie cubique est brisée et où des composantes transverse et longitudinale
 peuvent devoir être renormalisées séparément.
+L'équation SCHA correspondante en phase ferroélectrique, dans laquelle le
+centroïde et le noyau harmonique doivent être déterminés conjointement, est
+dérivée formellement dans
+l'\hyperref[sec:core_ferroelectric_extension]{\textcolor{blue}{annexe~\ref*{sec:core_ferroelectric_extension}}}.
+Cette extension précise le cadre théorique, mais n'est pas résolue
+numériquement dans ce rapport.
 \begin{equation}
 A^{(u)}(Q;A_1^{(u)})=M^*\omega_n^2\mathbb I
 +\Phi^{\rm SR}(\mathbf k)+\Phi^{\rm dip,Ewald}(\mathbf k)
@@ -1478,7 +1480,7 @@ A(K;T).
 
 Pour construire la mesure $\langle\cdot\rangle_A$, la SCHA introduit l'action
 gaussienne d'essai, avec la transformée temporelle symétrique de
-l'Eq.~\eqref{eq:core_matsubara_transform} et le poids $e^{-\mathcal S_0/\hbar}$,
+l'équation~\eqref{eq:core_matsubara_transform} et le poids $e^{-\mathcal S_0/\hbar}$,
 \begin{equation}
 \mathcal S_0
 =\frac12
@@ -1502,7 +1504,7 @@ p^\alpha(k,\omega_n)p^\beta(k',\omega_m)
 
 Pour rendre explicite le passage entre la moyenne gaussienne et l'équation
 auto-cohérente sans alourdir chaque ligne, on utilise la mesure $\int_Q$
-introduite avant l'Eq.~\eqref{eq:core_acoustic_action}, en renommant sa
+introduite avant l'équation~\eqref{eq:core_acoustic_action}, en renommant sa
 variable muette $\mathbf q$ en $\mathbf k$ lorsque cela est commode, ainsi que
 \begin{equation}
 D_Q^{\alpha\beta}\equiv
@@ -1627,7 +1629,7 @@ F_{\rm var}=F_A+F_2+F_4^{\rm loc}+F_4^{\rm hom}
 \label{eq:core_variational_decomposition}
 \end{equation}
 Les sept termes sont, dans cet ordre, les contributions de
-Eq.~\eqref{eq:core_variational_free_energy_compact}. En particulier,
+l'équation~\eqref{eq:core_variational_free_energy_compact}. En particulier,
 \begin{align}
 f_2&=\frac12\int_Q(A_{0,Q}-A_Q)_{\alpha\beta}D_Q^{\alpha\beta},
 \label{eq:core_f2_definition}\\
@@ -1651,7 +1653,7 @@ $Q$, défini par $\int_Q\delta_Q(K)h_Q=h_K$, on obtient
 \label{eq:core_symmetric_propagator_derivative}
 \end{equation}
 La dérivée de l'insertion inhomogène définie par
-l'Eq.~\eqref{eq:core_inhomogeneous_self_energy} se déduit alors directement :
+l'équation~\eqref{eq:core_inhomogeneous_self_energy} se déduit alors directement :
 \begin{equation}
 \frac{\delta\mathcal I^{\rm inh}_{\alpha\beta}(Q;A)}
 {\delta A_{ab}(K)}
@@ -1661,7 +1663,7 @@ l'Eq.~\eqref{eq:core_inhomogeneous_self_energy} se déduit alors directement :
 \end{equation}
 Les deux propagateurs du terme $f_4^{\rm inh}$ peuvent être dérivés. L'égalité
 des deux contributions utilise explicitement la parité et les symétries
-mineures de l'Eq.~\eqref{eq:core_inhomogeneous_vertex_parity} :
+mineures de l'équation~\eqref{eq:core_inhomogeneous_vertex_parity} :
 \begin{equation}
 \mathcal M^{\rm inh}_{\alpha\mu,\beta\nu}(Q-K)
 =\mathcal M^{\rm inh}_{\alpha\mu,\beta\nu}(K-Q)
@@ -1739,10 +1741,10 @@ potentielle qui reste après retrait du terme quadratique nu et définissons
 \end{equation}
 Cette définition est opérationnelle : la dérivée de chaque contraction de
 Wick d'un terme de $V_{\rm int}$ est égale à $-\tfrac12\Pi_{\mu\nu}\mathcal
-S_K^{\mu\nu\mid ab}$. Par exemple, l'Eq.~\eqref{eq:core_f4loc_variation}
+S_K^{\mu\nu\mid ab}$. Par exemple, l'équation~\eqref{eq:core_f4loc_variation}
 correspond à $\Pi^{\rm loc}_{\mu\nu}=3\beta_{\mu\nu\gamma\delta}
 G^{\gamma\delta}$. En ajoutant la variation de $f_A+f_2$, obtenue dans
-l'Eq.~\eqref{eq:core_fAf2_variation}, la stationnarité prend donc la forme
+l'équation~\eqref{eq:core_fAf2_variation}, la stationnarité prend donc la forme
 factorisée
 \begin{equation}
 0=\frac{\delta f_{\rm var}}{\delta A_{ab}(K)}
@@ -1753,7 +1755,7 @@ factorisée
 \end{equation}
 On contracte cette
 égalité avec $A_{ra}(K)A_{sb}(K)$ ; puisque $A$ est l'inverse de $D$, la
-définition de l'Eq.~\eqref{eq:core_symmetric_propagator_derivative} donne
+définition de l'équation~\eqref{eq:core_symmetric_propagator_derivative} donne
 \begin{equation}
 A_{ra}(K)A_{sb}(K)\,
 \mathcal S_K^{\mu\nu\mid ab}
@@ -1776,7 +1778,7 @@ $A$. Cette séparation permet d'activer ou de désactiver chaque secteur pour
 identifier son influence.
 
 La covariance locale $G$ définie par
-Eq.~\eqref{eq:core_equal_point_covariance} condense donc les intégrales
+l'équation~\eqref{eq:core_equal_point_covariance} condense donc les intégrales
 internes. Les contractions de Wick donnent les facteurs $3$, $15$ et $105$
 pour les ordres quatre, six et huit. La forme tensorielle est
 \begin{mdframed}[linecolor=red!60!black,nobreak=true]
@@ -1847,9 +1849,9 @@ lui, reste fini.
 
 \subsection{Réduction cubique effectivement résolue}
 
-L'Eq.~\eqref{eq:core_full_scha_tensor} est l'équation tensorielle dont part le
+L'équation~\eqref{eq:core_full_scha_tensor} est l'équation tensorielle dont part le
 calcul. La fermeture effectivement résolue adopte l'ansatz à masse isotrope
-comme annoncé à l'Eq.~\eqref{eq:core_full_lattice_trial_kernel} :
+comme annoncé à l'équation~\eqref{eq:core_full_lattice_trial_kernel} :
 \begin{equation}
 A^{\rm trial}_{ab}(\mathbf k,\omega_n;T,p)
 =A_{0,ab}(\mathbf k,\omega_n;p)
@@ -1870,7 +1872,7 @@ $G^{ab}=\delta^{ab}\bar g$ avec
 diagonalisation introduite ci-dessus est effectuée pour une masse d'essai ; une
 valeur est rejetée dès qu'un des $\mu_\lambda$ devient négatif.
 
-La projection isotrope de l'Eq.~\eqref{eq:core_full_scha_tensor} réduit alors
+La projection isotrope de l'équation~\eqref{eq:core_full_scha_tensor} réduit alors
 la recherche de $A$ à une seule équation scalaire. En définissant les
 contractions cubiques
 \begin{equation}
@@ -1908,10 +1910,10 @@ i_{\rm inh}[A_1;T,p]
 \label{eq:core_scalar_inhomogeneous_projection}
 \end{equation}
 où $\mathcal I^{\rm inh}$ est la convolution définie à
-l'Eq.~\eqref{eq:core_inhomogeneous_self_energy}. Contrairement aux autres
+l'équation~\eqref{eq:core_inhomogeneous_self_energy}. Contrairement aux autres
 corrections quartiques, $i_{\rm inh}$ conserve donc une convolution interne en
 $Q$. L'algorithme évalue $\bar g$ et $i_{\rm inh}$ pour une masse candidate,
-puis annule le résidu de l'Eq.~\eqref{eq:core_scalar_scha_closure} par
+puis annule le résidu de l'équation~\eqref{eq:core_scalar_scha_closure} par
 encadrement. Lorsque l'auto-énergie inhomogène dépend de $K$, cette
 projection en $K=0$ ne coïncide pas en général avec la minimisation de
 $F_{\rm var}[A_0+\delta m\mathbb I]$ dans la famille restreinte : cette
@@ -1956,9 +1958,6 @@ minimisation sur $\overline P_T$, il donne
 =\frac{\Omega_0}{A_1^{(P)}}.
 \label{eq:core_dielectric_free_energy_derivatives}
 \end{equation}
-La courbure de l'énergie libre variationnelle après réoptimisation du noyau
-n'est pas calculée ici ; l'identification à la réponse thermodynamique
-complète demanderait ce contrôle supplémentaire.
 Pour une mesure
 capacitive, on sélectionne le canal transverse et on rétablit le fond électronique :
 \begin{equation}
@@ -2088,7 +2087,7 @@ d_{\ell\alpha}
 \chi^{\mu\alpha}=\Omega_0[A(0,\omega_0)^{-1}]^{\mu\alpha},
 \label{eq:core_piezo_gaussian_correlator_derivative}
 \end{equation}
-insérée dans l'Eq.~\eqref{eq:core_piezo_stationary_strain} donne alors la
+insérée dans l'équation~\eqref{eq:core_piezo_stationary_strain} donne alors la
 formule suivante.
 À noyau gaussien fixé, la dérivée du corrélateur polaire donne, pour un état
 homogène de polarisation moyenne $\overline P$, la formule fermée
@@ -2113,7 +2112,7 @@ l'objet de l'étude dans les domaines de composition et de température
 considérés. Les intégrales sur la zone de Brillouin sont évaluées sur des
 grilles cubiques régulières. Les sommes de Matsubara sont effectuées
 analytiquement sous la forme modale donnée par
-l'Eq.~\eqref{eq:core_physical_covariance}. Les équations non linéaires sont
+l'équation~\eqref{eq:core_physical_covariance}. Les équations non linéaires sont
 résolues par une recherche de racine de Brent, avec continuation en température
 afin de suivre la même branche.
 
@@ -2154,7 +2153,7 @@ Pour chaque température, la reconstruction exacte est la suivante :
   \item ajouter $\mathcal P^{(p,u)}(T)$, puis un essai de masse $A_1^{(u)}$ ;
   \item diagonaliser la matrice réelle symétrique $3\times3$ à chaque
   $\mathbf k$ et rejeter l'essai si une valeur propre statique est négative ;
-  \item calculer $G^{(u)}$ par Eq.~\eqref{eq:core_physical_covariance}, avec
+  \item calculer $G^{(u)}$ par l'équation~\eqref{eq:core_physical_covariance}, avec
   $m_P$ remplacé par $M^*$ et le noyau en $u$, puis les
   contributions locale, homogène, inhomogène, sextique et octique séparément ;
   \item évaluer $R(A_1)$, encadrer un changement de signe et résoudre par
@@ -2165,9 +2164,6 @@ Pour chaque température, la reconstruction exacte est la suivante :
   $\chi_T=Z^{*2}/(\Omega_0 A_1^{(u)})=\Omega_0/A_1^{(P)}$ et restaurer
   $\varepsilon_\infty$ uniquement pour la comparaison expérimentale.
 \end{enumerate}
-Cette chaîne ne contient aucune trajectoire à échantillonner. Les seuls objets
-discrétisés sont la zone de Brillouin et, lorsque la forme analytique n'est pas
-disponible, une quadrature déterministe.
 
 \begin{table}[H]
 \centering
@@ -2177,7 +2173,9 @@ disponible, une quadrature déterministe.
 \hline
 Contrôle & Critère \\
 \hline
-Convergence de la racine & Résidu du noyau sous le seuil fixé après résolution de Brent \\
+Convergence de la racine & Résolution de Brent avec
+$x_{\rm tol}=10^{-13}\,\mathrm{Ha/bohr^2}$ et $r_{\rm tol}=10^{-13}$ ; résidu
+final enregistré dans les sorties \\
 Sensibilité de grille & Comparaison des résultats pour $n=32$, $36$ et $40$ points par direction \\
 Stabilité de branche & Suivi de la plus petite valeur propre et arrêt avant $A_1\leq0$ \\
 Traçabilité des courbes & Étiquetage séparé des prédictions, calibrations, reconstructions et extrapolations \\
@@ -2187,9 +2185,9 @@ Conservation des unités & Conversion centralisée entre unités atomiques, SI e
 \end{table}
 
 Pour le BST, le passage de $n=32$ à $n=40$ modifie les observables retenues de
-$0{,}36$ à $0{,}53\,\%$ au plus. Cette incertitude est inférieure aux écarts de
-modèle et aux incertitudes expérimentales ; une augmentation systématique de la
-grille ne serait donc pas le premier levier d'amélioration.
+$0{,}36$ à $0{,}53\,\%$ au plus. Dans cette plage, l'erreur de grille demeure
+inférieure aux écarts de modèle et aux incertitudes expérimentales ; elle n'est
+donc pas la source d'erreur dominante.
 
 % =============================================================================
 \section{Comparaisons détaillées pour \texorpdfstring{BaTiO$_3$}{BaTiO3}}
@@ -2224,9 +2222,7 @@ paramètre de maille, elle permet de reproduire l'expansion thermique manquante
 dans cette description réduite : elle prolonge à température finie la logique
 de correction de volume précédente. Lorsqu'elle est calibrée sur $\chi(T)$, elle
 absorbe plus largement, sous la forme d'un décalage de masse, la projection des
-contributions omises sur la réponse uniforme. Cette seconde calibration n'est
-donc ni une pression extérieure prédite par la DFT ni l'identification d'un
-mécanisme microscopique unique. La comparaison sépare ainsi la réponse sans
+contributions omises sur la réponse uniforme. La comparaison sépare ainsi la réponse sans
 correction, la pression déduite de la maille et le contre-terme ajusté sur la
 susceptibilité. La
 comparaison de Mayer constitue ensuite un test important, car sa paramétrisation
@@ -2237,22 +2233,27 @@ des extrapolations.
 
 \subsection{Références et protocoles de pression}
 
-La loi de Barrett fournit l'interpolation quantique
+La loi de Barrett~\cite{Barrett1952} fournit l'interpolation quantique
 \begin{equation}
 \varepsilon_r(T)=
 \frac{C}{\frac{T_1}{2}\coth\!\left(\frac{T_1}{2T}\right)-T_0}.
 \label{eq:core_barrett_law}
 \end{equation}
-Pour BaTiO$_3$, les nombres utilisés comme référence ne sont cependant pas des
-prédictions du modèle : Barrett rapporte $C=1.5\times10^5\,\mathrm K$ et
-$T_0=390\,\mathrm K$ à partir de l'expérience~\cite{Barrett1952}. Dans la
-région classique,
+Pour BaTiO$_3$, les constantes arrondies $C=1.5\times10^5\,\mathrm K$ et
+$T_0=390\,\mathrm K$ définissent ici une référence empirique. Elles sont
+cohérentes avec un ajustement direct des points de Wieczorek entre
+$420$ et $560\,\mathrm K$, qui donne $C=1.53\times10^5\,\mathrm K$ et
+$T_0=392.4\,\mathrm K$~\cite{Wieczorek2006}. Dans la région classique, la
+susceptibilité du mode mou est obtenue dans la convention gaussienne en
+retranchant le fond électronique du jeu Nishimatsu,
 \begin{equation}
 \varepsilon_r^{\rm CW,exp}(T)
 =\frac{1.5\times10^5\,\mathrm K}{T-390\,\mathrm K},
 \qquad
 \chi_{\rm soft}^{\rm CW,exp}
-=\frac{\varepsilon_r^{\rm CW,exp}-6}{4\pi}.
+=\frac{\varepsilon_r^{\rm CW,exp}-\varepsilon_\infty^{\rm Nish}}{4\pi},
+\qquad
+\varepsilon_\infty^{\rm Nish}=6.8691464565.
 \label{eq:core_barrett_reference}
 \end{equation}
 Cette courbe est donc une référence empirique.
@@ -2275,7 +2276,7 @@ a_{\rm exp}^{\rm fit}(T)=
 \label{eq:core_lattice_fit}
 \end{equation}
 À chaque
-température, Eq.~\eqref{eq:core_lattice_reconstruction} est inversée ; les
+température, l'équation~\eqref{eq:core_lattice_reconstruction} est inversée ; les
 pressions obtenues sont ensuite comprimées par
 \begin{equation}
 \boxed{
@@ -2283,8 +2284,8 @@ p_a(T)=(-0.004859728409\,T+0.250696172704)\ {\rm GPa}.}
 \label{eq:core_lattice_pressure}
 \end{equation}
 
-Sur la grille $40^3$, cette loi reproduit la maille cible avec une erreur
-maximale de $1.92\times10^{-6}\,\mathring{\rm A}$ entre 400 et
+Sur la grille $40^3$, cette loi reproduit la maille cible avec un résidu
+numérique maximal de $1.92\times10^{-6}\,\mathring{\rm A}$ entre 400 et
 $565\,\mathrm K$.
 
 Le second protocole est volontairement inverse. Il minimise la distance aux 14
@@ -2344,14 +2345,15 @@ omis se projettent très efficacement sur une correction quadratique scalaire
 et lisse en température.
 
 La pression issue de la
-maille reproduit la cible structurale avec une erreur maximale de
+maille reproduit la cible structurale avec un résidu numérique maximal de
 $1.92\times10^{-6}\,\mathring{\rm A}$, mais sa susceptibilité reste très
 inférieure à la mesure. À l'inverse, le contre-terme ajusté sur les 14 points
 de Wieczorek atteint une erreur relative absolue moyenne de $0.52\,\%$ : encore une fois, cet
 accord est une calibration inverse de la masse du mode mou,
-pas une validation indépendante du Hamiltonien. Cette calibration n'est cependant pas sans intérêt d'un point de vue
-informatif mais aussi prédictif : s'il s'avérait qu'elle peut être calibrée une fois pour toute, tout en permettant
-de faire des prédictions futures par exemple.
+pas une validation indépendante du Hamiltonien. Cette calibration inverse reste
+néanmoins informative. Elle ne prendrait un caractère prédictif que si les mêmes
+paramètres, déterminés une seule fois, reproduisaient ensuite des données qui
+n'ont pas servi à l'ajustement.
 
 \begin{figure}[H]
 \centering
@@ -2367,7 +2369,7 @@ Barrett~\cite{Barrett1952} et Wieczorek et al.~\cite{Wieczorek2006}.}
 
 La spinodale de la branche centrée est calculée sans ajuster $A_1(T)$ à une
 droite : on fixe $A_1=0^+$ dans
-Eq.~\eqref{eq:core_scalar_residual} et on résout le résidu en température le
+l'équation~\eqref{eq:core_scalar_residual} et on résout le résidu en température le
 long de $p_{\rm fit}(T)$. Le résultat sur grille $40^3$ est
 \begin{equation}
 T_{\rm sp,para}=385.1604\ {\rm K},\qquad
@@ -2394,15 +2396,19 @@ d'évaluer si leur effet statique renormalisé sur la surface d'énergie est
 important. Cette étape produit un nouveau jeu de coefficients effectifs, mais
 ne change ni les variables retenues $(u,\mathbf w,\eta)$ ni la forme du
 Hamiltonien effectif réduit. La SCHA du présent travail reprend ce jeu
-anharmonique, avec un choix explicite d’ancrage harmonique décrit ci-dessous. Il faut donc distinguer « même modèle réduit » de
+anharmonique, avec un choix explicite d'ancrage harmonique illustré par la
+figure~\ref{fig:core_mayer_reduction}. Il faut donc distinguer « même modèle réduit » de
 « mêmes coefficients que dans la paramétrisation initiale » : ces derniers sont
 précisément renormalisés par l'élimination adiabatique.
 
 Dans les calculs présentés ici, la courbure harmonique du mode uniforme est
-fixée à $A_{0,1}^{(u)}=2\kappa$, afin de reprendre celle du potentiel
-$E_{001}(u)$ de Mayer. La reconstruction du noyau à partir des autres
-paramètres publiés donne une valeur légèrement différente dans la convention
-d'Ewald utilisée ; son origine reste à préciser.
+fixée à $2\kappa=-0{,}0404430732\ \mathrm{Ha/bohr^2}$. La reconstruction à
+partir des autres paramètres publiés donne
+$-0{,}0412428397\ \mathrm{Ha/bohr^2}$ dans la convention d'Ewald utilisée,
+soit un décalage de $+0{,}0007997665\ \mathrm{Ha/bohr^2}$, environ $2\,\%$.
+Le noyau de calcul applique explicitement ce décalage ; son origine reste à
+préciser, ce qui empêche d'identifier strictement ce calcul au modèle numérique
+de la dynamique moléculaire publiée.
 
 \begin{figure}[H]
 \centering
@@ -2421,12 +2427,13 @@ d'Ewald utilisée ; son origine reste à préciser.
   \node[below=0.35cm of model,align=center,font=\small] {même $\theta_{\rm eff}$ :
     base de comparaison MD et SCHA};
 \end{tikzpicture}
-\caption*{\small\textit{Schéma --- Réduction adiabatique employée par Mayer \emph{et al.}. Les modes
+\caption{Réduction adiabatique employée par Mayer \emph{et al.} Les modes
 secondaires modifient les coefficients du potentiel effectif, mais pas l'espace
 des variables ni la forme du Hamiltonien réduit. Le jeu $\theta_{\rm eff}$ est
 ensuite repris dans la SCHA pour être comparé aux résultats de dynamique
 moléculaire. Schéma de l'auteur, d'après la procédure de la
-réf.~\cite{Mayer2022}.}}
+réf.~\cite{Mayer2022}.}
+\label{fig:core_mayer_reduction}
 \end{figure}
 
 Dans cette construction, la dynamique moléculaire classique sur le potentiel
@@ -2436,17 +2443,17 @@ rapportée est $257\,\mathrm K$~\cite{Mayer2022}. Cette amélioration établit q
 les couplages aux modes optiques secondaires constituent un mécanisme
 quantitativement pertinent. La figure~\ref{fig:core_mayer_md} montre également
 que la réponse obtenue par dynamique moléculaire suit la tendance expérimentale.
-Elle est ici une référence de \emph{benchmark}, et non une nouvelle mesure
+Elle est ici une référence de comparaison, et non une nouvelle mesure
 expérimentale.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.46\textwidth]{../soutenance_stage_beamer/assets/mayer2022_fig3a_permittivity.png}
 \caption{Permittivité calculée par dynamique moléculaire classique avec le
-potentiel effectif enrichi de Mayer \emph{et al.}. Cette référence montre que
+potentiel effectif enrichi de Mayer \emph{et al.} Cette référence montre que
 l'enrichissement par les modes optiques secondaires rapproche fortement la
 tendance calculée de la réponse expérimentale ; elle ne constitue pas une
-mesure directe. Adapté de la Fig.~3(a) de la réf.~\cite{Mayer2022}.}
+mesure directe. Adapté de la figure~3(a) de la réf.~\cite{Mayer2022}.}
 \label{fig:core_mayer_md}
 \end{figure}
 
@@ -2491,16 +2498,15 @@ Mayer PBEsol & $p_{\rm eff}=0$ & $170.6798$ & $0$ \\
 \end{tabular}
 \end{table}
 
-Le résultat est instructif à deux niveaux. D'une part, l'amélioration obtenue
+Deux constats se dégagent. D'une part, l'amélioration obtenue
 en dynamique moléculaire confirme que les couplages aux modes optiques
 secondaires doivent être considérés dans le diagnostic de l'écart. D'autre
-part, avec ce même potentiel enrichi, la fermeture SCHA centrée reste nettement
-plus rigide que la réponse de la dynamique moléculaire et que sa tendance
-expérimentale. Le désaccord ne peut donc pas être attribué au seul volume ni,
-après enrichissement du potentiel, au seul choix des paramètres microscopiques :
-il rend l'approximation gaussienne elle-même suspecte, sans démontrer qu'elle
-est l'unique source de l'écart. Ce constat motive le diagnostic post-SCHA de la
-section suivante.
+part, la comparaison directe aux résultats expérimentaux montre que la réponse
+obtenue avec la fermeture SCHA centrée reste nettement trop rigide. Le meilleur
+accord obtenu par la dynamique moléculaire classique de Mayer avec ces mêmes
+mesures, pour le même potentiel enrichi, suggère qu'une partie de l'écart peut
+provenir de la fermeture statistique, sans l'établir causalement. Ce constat
+motive le diagnostic post-SCHA de la section suivante.
 
 Les résultats autorisent à ce stade de l'analyse trois conclusions :
 \begin{enumerate}
@@ -2508,9 +2514,9 @@ Les résultats autorisent à ce stade de l'analyse trois conclusions :
   \item une correction scalaire de masse reproduit les données sur un intervalle
   restreint, mais cette calibration inverse n'identifie pas le mécanisme absent ;
   \item les modes optiques et leurs couplages anharmoniques sont pertinents en
-  dynamique moléculaire, mais ne suffisent pas à ramollir la réponse obtenue
-  par notre SCHA ; ce contraste oriente vers une sous-estimation liée à la
-  fermeture statistique.
+  dynamique moléculaire ; l'écart restant entre notre SCHA et les mesures est
+  compatible avec une limite de la fermeture statistique, sans l'isoler comme
+  cause.
 \end{enumerate}
 
 % =============================================================================
@@ -2527,9 +2533,9 @@ $403\,\mathrm K$ expérimentaux~\cite{Mayer2022}, alors que sa résolution par l
 SCHA scalaire centrée reste trop dure. Le volume n'est donc pas le seul
 candidat. Comme la SCHA ne conserve que les contractions gaussiennes, le test
 naturel suivant consiste à réintroduire la première corrélation irréductible
-qu'elle ne resomme pas, puis à vérifier sa taille. Le but n'est pas encore de
-produire une nouvelle courbe prédictive, mais de déterminer si la fermeture
-gaussienne constitue effectivement une limite plausible.
+qu'elle ne resomme pas, puis à vérifier sa taille. Cette correction sert
+uniquement à tester le signe et l'ordre de grandeur de l'effet ; elle n'est pas
+utilisée à des fins prédictives.
 
 Pour organiser cette question, on réécrit exactement le Hamiltonien sous la
 forme
@@ -2578,7 +2584,10 @@ sextiques et octiques. Les vertex dynamiques issus de la déformation
 inhomogène, les autres squelettes à deux insertions et le résidu quadratique
 non local de la fermeture restreinte sont omis. Le calcul ne constitue donc
 pas le développement post-SCHA complet à cet ordre. La petite quantité pertinente n'est pas l'écart visuel
-entre deux courbes, mais
+entre deux courbes, mais\footnote{La notation $\lVert\cdot\rVert_2$ utilisée
+dans l'équation suivante désigne la norme spectrale, c'est-à-dire la plus grande
+valeur singulière. Pour la matrice symétrique considérée ici, elle est égale au
+plus grand module de ses valeurs propres.}
 \begin{equation}
 r(K)=\left\|
 A_{\rm SCHA}(K)^{-1/2}
@@ -2621,22 +2630,17 @@ $F_{\rm SCHA}[\overline P]$ après réoptimisation du noyau ; (ii) construire le
 vertex cohérents associés à cette énergie libre ; (iii) tester une resommation
 2PI ou de Dyson ; (iv) n'introduire un groupe de renormalisation du mode de
 Matsubara nul que si l'action de départ et le raccord ultraviolet sont
-contrôlés. Appliquer directement un flot de renormalisation au noyau réduit
-n'éliminerait ni une erreur de paramétrisation microscopique ni un mode optique
-absent.
+contrôlés.
 
 % =============================================================================
 \section{Approximation de cristal virtuel pour le BST}
 \label{ann:bst_vca_fr}
 % =============================================================================
 
-La VCA possède d'abord une justification chimique simple : Sr et Ba appartiennent
-à la même colonne du tableau périodique, celle des alcalino-terreux. Leur
-substitution sur le site $A$ de la pérovskite est donc isovalente (valence
-nominale $+2$) et conserve la nature chimique moyenne du sous-réseau. Cette
-proximité justifie qu'une interpolation lisse des paramètres microscopiques
-constitue un premier modèle de référence. La VCA, en revanche, ne décrit ni
-les fluctuations locales de composition ni le désordre qu'elles induisent.
+L'isovalence de Ba et Sr motive une première interpolation homogène, sans
+justifier à elle seule la linéarité de tous les paramètres. La VCA ne décrit
+toutefois ni les fluctuations locales de composition ni le désordre qu'elles
+induisent.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.70\textwidth]{periodic_table_ba_sr.png}
@@ -2686,9 +2690,10 @@ pour conséquence que le solveur $3\times3$ n'est plus suffisant.
 Pour les fractions
 de baryum $x=0.4$, $0.5$ et $0.6$, une correction affine ajustée entre 400 et
 $600\,\mathrm K$ reconstruit la cible nominale de Curie--Weiss avec un résidu
-maximal inférieur à $0.62\,\%$. Cette valeur mesure uniquement la qualité d'une
-compression à deux paramètres : les cibles nominales sont des reconstructions
-contraintes par la littérature et non des mesures brutes directes.
+maximal inférieur à $0.62\,\%$. Ce résidu quantifie seulement l'ajustement affine
+à deux paramètres ; il ne valide pas le mécanisme physique. Les cibles nominales
+sont des reconstructions contraintes par la littérature, et non des mesures
+brutes directes.
 
 \begin{figure}[H]
 \centering
@@ -2712,6 +2717,6 @@ région de ramollissement et les effets anharmoniques et non gaussiens les plus
 marqués peuvent peser moins fortement sur la réponse. Cette lecture est
 compatible avec l'efficacité des phonons auto-cohérents documentée pour la
 phase cubique de SrTiO$_3$, rappelée en
-section~\ref{ann:scha_reponse}~\cite{TadanoTsuneyuki2015}. Elle ne démontre
+\hyperref[ann:scha_reponse]{\textcolor{blue}{section~\ref*{ann:scha_reponse}}}~\cite{TadanoTsuneyuki2015}. Elle ne démontre
 toutefois ni que l'amélioration soit monotone en composition, ni que
 l'éloignement de la transition en soit l'unique cause.
