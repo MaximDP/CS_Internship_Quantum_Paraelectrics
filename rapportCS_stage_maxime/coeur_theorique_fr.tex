@@ -1919,8 +1919,11 @@ projection en $K=0$ ne coïncide pas en général avec la minimisation de
 $F_{\rm var}[A_0+\delta m\mathbb I]$ dans la famille restreinte : cette
 dernière fait intervenir une moyenne pondérée sur les propagateurs de toute
 la zone et sur les fréquences. Le solveur réalise donc une fermeture scalaire
-projetée issue de l'équation SCHA tensorielle ; son petit résidu ne démontre
-pas la stationnarité de la fonctionnelle variationnelle complète. Cette forme montre explicitement les dépendances respectivement
+projetée issue de l'équation SCHA tensorielle. Son faible résidu montre que
+l'équation d'auto-cohérence est satisfaite avec une bonne précision numérique,
+mais ne suffit pas à établir la stabilité variationnelle de la solution. Celle-ci
+pourrait correspondre à un minimum local, à un maximum local ou à un point selle.
+Cette forme montre explicitement les dépendances respectivement
 linéaire, quadratique et cubique en boucle des vertices d'ordres quatre, six et
 huit.
 
@@ -2395,9 +2398,8 @@ s'agit donc pas d'ajouter deux propagateurs dynamiques à la SCHA présente, mai
 d'évaluer si leur effet statique renormalisé sur la surface d'énergie est
 important. Cette étape produit un nouveau jeu de coefficients effectifs, mais
 ne change ni les variables retenues $(u,\mathbf w,\eta)$ ni la forme du
-Hamiltonien effectif réduit. La SCHA du présent travail reprend ce jeu
-anharmonique, avec un choix explicite d'ancrage harmonique illustré par la
-figure~\ref{fig:core_mayer_reduction}. Il faut donc distinguer « même modèle réduit » de
+Hamiltonien effectif réduit. La SCHA du présent travail reprend ce jeu de
+coefficients effectifs. Il faut donc distinguer « même modèle réduit » de
 « mêmes coefficients que dans la paramétrisation initiale » : ces derniers sont
 précisément renormalisés par l'élimination adiabatique.
 
@@ -2431,8 +2433,8 @@ de la dynamique moléculaire publiée.
 secondaires modifient les coefficients du potentiel effectif, mais pas l'espace
 des variables ni la forme du Hamiltonien réduit. Le jeu $\theta_{\rm eff}$ est
 ensuite repris dans la SCHA pour être comparé aux résultats de dynamique
-moléculaire. Schéma de l'auteur, d'après la procédure de la
-réf.~\cite{Mayer2022}.}
+moléculaire. Schéma réalisé par l'auteur à partir de la procédure décrite dans
+la réf.~\cite{Mayer2022}.}
 \label{fig:core_mayer_reduction}
 \end{figure}
 
